@@ -1,3 +1,4 @@
+/* src/app/globals.css */
 @import "tailwindcss";
 
 /* Brand design tokens — HumanxMachine */
@@ -9,7 +10,7 @@
   --color-dark-surface: #1a1a17;
   --color-dark-border: #2a2a27;
 
-  /* Font families (loaded via next/font in layout.tsx) */
+  /* Font families (CSS vars set by next/font in layout.tsx) */
   --font-headline: var(--font-space-grotesk), sans-serif;
   --font-body: var(--font-dm-sans), sans-serif;
   --font-mono: monospace;
@@ -22,13 +23,46 @@
   --max-w-site: 1440px;
 }
 
-:root {
-  --background: #12120f;
-  --foreground: #fffefd;
+/* Base resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #12120f;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: #12120f;
+  color: #fffefd;
   font-family: var(--font-dm-sans), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Hide default cursor when JS cursor is active */
+body.cursor-active * {
+  cursor: none !important;
+}
+
+/* Selection */
+::selection {
+  background-color: #ff4d00;
+  color: #fffefd;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #12120f; }
+::-webkit-scrollbar-thumb { background: #2a2a27; border-radius: 2px; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
