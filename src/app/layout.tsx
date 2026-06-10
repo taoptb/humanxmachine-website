@@ -1,6 +1,7 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next'
 import { Space_Grotesk, DM_Sans } from 'next/font/google'
+import { Nav } from '@/components/layout/Nav'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -33,7 +34,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${dmSans.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Nav />
+        {children}
+      </body>
     </html>
   )
 }
