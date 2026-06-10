@@ -2,6 +2,7 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, DM_Sans } from 'next/font/google'
 import { Nav } from '@/components/layout/Nav'
+import { CustomCursor } from '@/components/layout/CustomCursor'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -35,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${dmSans.variable}`}>
       <body>
+        <CustomCursor />
         <Nav />
         {children}
       </body>

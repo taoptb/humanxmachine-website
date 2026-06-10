@@ -66,3 +66,18 @@ body.cursor-active * {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Custom cursor expanded state */
+#custom-cursor.expanded {
+  width: 32px;
+  height: 32px;
+  margin-top: -12px;
+  margin-left: -12px;
+  background-color: rgba(255, 77, 0, 0.3);
+  border: 1px solid #ff4d00;
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+}
+
+#custom-cursor {
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+}
