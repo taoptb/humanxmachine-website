@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Space_Grotesk, DM_Sans } from 'next/font/google'
 import { Nav } from '@/components/layout/Nav'
 import { CustomCursor } from '@/components/layout/CustomCursor'
+import { PageTransition } from '@/components/layout/PageTransition'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -38,7 +39,9 @@ export default function RootLayout({
       <body>
         <CustomCursor />
         <Nav />
-        {children}
+        <PageTransition>
+          {children}
+        </PageTransition>
       </body>
     </html>
   )

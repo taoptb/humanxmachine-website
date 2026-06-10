@@ -5,34 +5,18 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { scrollReveal } from '@/lib/animations'
 
-const FEATURED_PROJECTS = [
-  {
-    slug: 'the-algorithm-of-soul',
-    title: 'The Algorithm of Soul',
-    category: 'Original IP · Film · AI Production',
-    description: 'An original HumanxMachine film — AI-designed characters, world, and visual identity built from the ground up.',
-    coverUrl: '/work/algo/hero.png',
-    isVideo: false,
-  },
-  {
-    slug: 'luxora',
-    title: 'Luxora',
-    category: 'K-POP · AI Character · Music',
-    description: 'A K-POP girl group built entirely with AI — characters, visuals, campaign, and music production from scratch.',
-    coverUrl: '/work/luxora/hero.png',
-    isVideo: false,
-  },
-  {
-    slug: 'commercial-production',
-    title: 'Commercial Production',
-    category: 'Commercial Ads · Video · Athlete',
-    description: 'Cinematic athlete content — performance films produced end-to-end for a global sportswear brand.',
-    coverUrl: null,
-    isVideo: true,
-  },
-]
+interface FeaturedWorkProps {
+  projects: {
+    slug: string
+    title: string
+    category: string
+    description: string
+    coverUrl: string | null
+    isVideo?: boolean
+  }[]
+}
 
-export function FeaturedWork() {
+export function FeaturedWork({ projects }: FeaturedWorkProps) {
   const headerRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
@@ -70,7 +54,7 @@ export function FeaturedWork() {
         </div>
 
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {FEATURED_PROJECTS.map((project) => (
+          {projects.map((project) => (
             <Link
               key={project.slug}
               href={`/work/${project.slug}`}
