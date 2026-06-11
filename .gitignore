@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Visual companion brainstorm sessions
+.superpowers/
+
+# Claude Code local config
+.claude/
