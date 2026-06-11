@@ -23,47 +23,49 @@
   --max-w-site: 1440px;
 }
 
-/* Base resets */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-  background-color: #12120f;
-}
-
-body {
-  background-color: #12120f;
-  color: #fffefd;
-  font-family: var(--font-dm-sans), sans-serif;
-  overflow-x: hidden;
-}
-
-/* Hide default cursor when JS cursor is active */
-body.cursor-active * {
-  cursor: none !important;
-}
-
-/* Selection */
-::selection {
-  background-color: #ff4d00;
-  color: #fffefd;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #12120f; }
-::-webkit-scrollbar-thumb { background: #2a2a27; border-radius: 2px; }
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
+/* Base resets — must be in @layer base so Tailwind utilities override them */
+@layer base {
   *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #12120f;
+  }
+
+  body {
+    background-color: #12120f;
+    color: #fffefd;
+    font-family: var(--font-dm-sans), sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Hide default cursor when JS cursor is active */
+  body.cursor-active * {
+    cursor: none !important;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: #ff4d00;
+    color: #fffefd;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #12120f; }
+  ::-webkit-scrollbar-thumb { background: #2a2a27; border-radius: 2px; }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
