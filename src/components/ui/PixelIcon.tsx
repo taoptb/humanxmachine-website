@@ -1,5 +1,3 @@
-'use client'
-
 type PixelIconName = 'face' | 'x' | 'heart' | 'plus'
 
 interface PixelIconProps {
