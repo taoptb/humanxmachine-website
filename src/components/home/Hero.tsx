@@ -47,7 +47,7 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen bg-black flex flex-col justify-end px-10 pb-20 pt-32 overflow-hidden">
+    <section className="relative min-h-screen bg-black flex flex-col justify-end px-6 md:px-10 pb-16 md:pb-20 pt-28 md:pt-32 overflow-hidden">
 
       {/* Background grid */}
       <div

@@ -37,7 +37,7 @@ export function Pillars() {
       {/* Pillar 01 — dark */}
       <div
         ref={leftRef}
-        className="bg-black border-r border-dark-border px-12 py-20 relative overflow-hidden opacity-0"
+        className="bg-black border-b md:border-b-0 md:border-r border-dark-border px-6 md:px-12 py-14 md:py-20 relative overflow-hidden opacity-0"
       >
         <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-6">
           Pillar 01
@@ -68,7 +68,7 @@ export function Pillars() {
       {/* Pillar 02 — light */}
       <div
         ref={rightRef}
-        className="bg-white px-12 py-20 relative overflow-hidden opacity-0"
+        className="bg-white px-6 md:px-12 py-14 md:py-20 relative overflow-hidden opacity-0"
       >
         <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-6">
           Pillar 02

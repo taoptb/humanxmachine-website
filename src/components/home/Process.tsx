@@ -42,7 +42,7 @@ export function Process() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="bg-black border-t border-dark-border px-10 py-24">
+    <section ref={sectionRef} className="bg-black border-t border-dark-border px-6 md:px-10 py-16 md:py-24">
       <div className="max-w-5xl mx-auto">
         <div ref={labelRef} className="font-mono text-[9px] tracking-[3px] text-[#444] uppercase mb-12 opacity-0">
           05 — How We Work
@@ -55,7 +55,7 @@ export function Process() {
           From Idea<br />to Impact
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {STEPS.map((step) => (
             <div key={step.num} className="process-step opacity-0">
               <div className="font-headline font-bold text-[48px] tracking-tightest text-[#1f1f1c] leading-none mb-4">

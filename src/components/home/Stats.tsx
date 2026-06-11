@@ -37,14 +37,14 @@ export function Stats() {
   return (
     <section
       ref={sectionRef}
-      className="bg-orange grid grid-cols-3 px-10 py-20"
+      className="bg-orange grid grid-cols-3 px-6 md:px-10 py-16 md:py-20"
     >
       {STATS.map((stat) => (
         <div key={stat.label} className="text-center px-5">
           <span
             data-stat={stat.value}
             className="font-headline font-bold text-white leading-none block"
-            style={{ fontSize: 'clamp(56px, 8vw, 96px)', letterSpacing: '-4px' }}
+            style={{ fontSize: 'clamp(40px, 8vw, 96px)', letterSpacing: '-3px' }}
           >
             0
           </span>

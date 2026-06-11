@@ -29,7 +29,7 @@ export function HomeCTA() {
   return (
     <section
       ref={sectionRef}
-      className="bg-black border-t border-dark-border px-10 py-28 text-center"
+      className="bg-black border-t border-dark-border px-6 md:px-10 py-16 md:py-28 text-center"
     >
       <p className="cta-el font-mono text-[9px] tracking-[3px] text-[#444] uppercase mb-6 opacity-0">
         Ready to Build?

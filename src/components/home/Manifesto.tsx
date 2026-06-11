@@ -31,7 +31,7 @@ export function Manifesto() {
   const words = MANIFESTO.split(' ')
 
   return (
-    <section className="bg-black border-t border-dark-border px-10 py-28">
+    <section className="bg-black border-t border-dark-border px-6 md:px-10 py-16 md:py-28">
       <div className="max-w-5xl mx-auto">
         <div
           ref={labelRef}
