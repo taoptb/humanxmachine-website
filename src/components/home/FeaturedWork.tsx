@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { scrollReveal } from '@/lib/animations'
+import { loadGSAP, scrollReveal } from '@/lib/animations'
 
 interface FeaturedWorkProps {
   projects: {
@@ -23,18 +23,21 @@ export function FeaturedWork({ projects }: FeaturedWorkProps) {
   useEffect(() => {
     if (!headerRef.current || !gridRef.current) return
     let ctx: any
+    let cancelled = false
 
-    async function animate() {
-      const { gsap } = await import('gsap')
+    loadGSAP().then(({ gsap }) => {
+      if (cancelled) return
       ctx = gsap.context(() => {
         scrollReveal(headerRef.current!, { y: 20, duration: 0.7 })
         const cards = gridRef.current!.querySelectorAll('.work-card')
         scrollReveal(Array.from(cards) as Element[], { y: 30, stagger: 0.12, duration: 0.8 })
       })
-    }
+    })
 
-    animate()
-    return () => ctx?.revert()
+    return () => {
+      cancelled = true
+      ctx?.revert()
+    }
   }, [])
 
   return (

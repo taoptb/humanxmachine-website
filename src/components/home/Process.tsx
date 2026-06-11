@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { scrollReveal, drawLine } from '@/lib/animations'
+import { loadGSAP, scrollReveal, drawLine } from '@/lib/animations'
 
 const STEPS = [
   { num: '01', name: 'Discover', desc: 'Deep dive into your vision, market, and the gaps that need filling.' },
@@ -18,9 +18,10 @@ export function Process() {
   useEffect(() => {
     if (!sectionRef.current) return
     let ctx: any
+    let cancelled = false
 
-    async function animate() {
-      const { gsap } = await import('gsap')
+    loadGSAP().then(({ gsap }) => {
+      if (cancelled) return
       ctx = gsap.context(() => {
         scrollReveal(labelRef.current!, { y: 15 })
         scrollReveal(headlineRef.current!, { y: 20, delay: 0.1 })
@@ -32,10 +33,12 @@ export function Process() {
           if (line) drawLine(line, { delay: i * 0.1 + 0.3 })
         })
       })
-    }
+    })
 
-    animate()
-    return () => ctx?.revert()
+    return () => {
+      cancelled = true
+      ctx?.revert()
+    }
   }, [])
 
   return (

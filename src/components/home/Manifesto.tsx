@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { scrollReveal, wordReveal } from '@/lib/animations'
+import { loadGSAP, scrollReveal, wordReveal } from '@/lib/animations'
 
 const MANIFESTO =
   "Most agencies are still deciding how to feel about AI. We already used it to build a luxury brand, design a cyborg identity system, and produce a commercial campaign — this week."
@@ -13,19 +13,19 @@ export function Manifesto() {
 
   useEffect(() => {
     if (!containerRef.current || !labelRef.current || !bodyRef.current) return
-    let ctx: any
+    let cancelled = false
 
-    async function animate() {
-      const { gsap } = await import('gsap')
-      ctx = gsap.context(() => {
+    loadGSAP().then(({ gsap }) => {
+      if (cancelled) return
+      const ctx = gsap.context(() => {
         scrollReveal(labelRef.current!, { y: 20, duration: 0.7 })
         wordReveal(containerRef.current!)
         scrollReveal(bodyRef.current!, { y: 20, delay: 0.3, duration: 0.8 })
       })
-    }
+      return () => ctx.revert()
+    })
 
-    animate()
-    return () => ctx?.revert()
+    return () => { cancelled = true }
   }, [])
 
   const words = MANIFESTO.split(' ')

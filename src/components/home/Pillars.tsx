@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { Tag } from '@/components/ui/Tag'
 import { PixelIcon } from '@/components/ui/PixelIcon'
-import { scrollSlideIn } from '@/lib/animations'
+import { loadGSAP, scrollSlideIn } from '@/lib/animations'
 
 const PILLAR_ONE_TAGS = ['Brand Strategy', 'Identity Design', 'Biz Systems', 'AI Workflows']
 const PILLAR_TWO_TAGS = ['Content Strategy', 'Video / Photo', 'Distribution', 'AI Production']
@@ -15,17 +15,20 @@ export function Pillars() {
   useEffect(() => {
     if (!leftRef.current || !rightRef.current) return
     let ctx: any
+    let cancelled = false
 
-    async function animate() {
-      const { gsap } = await import('gsap')
+    loadGSAP().then(({ gsap }) => {
+      if (cancelled) return
       ctx = gsap.context(() => {
         scrollSlideIn(leftRef.current!, 'left')
         scrollSlideIn(rightRef.current!, 'right')
       })
-    }
+    })
 
-    animate()
-    return () => ctx?.revert()
+    return () => {
+      cancelled = true
+      ctx?.revert()
+    }
   }, [])
 
   return (

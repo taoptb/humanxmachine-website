@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { scrollReveal } from '@/lib/animations'
+import { loadGSAP, scrollReveal } from '@/lib/animations'
 import { Button } from '@/components/ui/Button'
 
 export function HomeCTA() {
@@ -10,17 +10,20 @@ export function HomeCTA() {
   useEffect(() => {
     if (!sectionRef.current) return
     let ctx: any
+    let cancelled = false
 
-    async function animate() {
-      const { gsap } = await import('gsap')
+    loadGSAP().then(({ gsap }) => {
+      if (cancelled) return
       ctx = gsap.context(() => {
         const els = sectionRef.current!.querySelectorAll('.cta-el')
         scrollReveal(Array.from(els) as Element[], { y: 20, stagger: 0.15, duration: 0.8 })
       })
-    }
+    })
 
-    animate()
-    return () => ctx?.revert()
+    return () => {
+      cancelled = true
+      ctx?.revert()
+    }
   }, [])
 
   return (

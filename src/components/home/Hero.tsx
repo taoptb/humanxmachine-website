@@ -17,9 +17,10 @@ export function Hero() {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let ctx: any
+    let cancelled = false
 
-    async function animate() {
-      const { gsap } = await loadGSAP()
+    loadGSAP().then(({ gsap }) => {
+      if (cancelled) return
 
       ctx = gsap.context(() => {
         const tl = gsap.timeline()
@@ -37,10 +38,12 @@ export function Hero() {
           .fromTo(actionsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 1.1)
           .fromTo(hintRef.current, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: 'power3.out' }, 1.4)
       })
-    }
+    })
 
-    animate()
-    return () => ctx?.revert()
+    return () => {
+      cancelled = true
+      ctx?.revert()
+    }
   }, [])
 
   return (
@@ -79,12 +82,12 @@ export function Hero() {
 
         <h1 className="font-headline font-bold leading-[0.95] tracking-tightest mb-8" style={{ fontSize: 'clamp(52px, 8vw, 100px)' }}>
           <span className="block overflow-hidden">
-            <span ref={line1Ref} className="block" style={{ transform: 'translateY(110%)' }}>
+            <span ref={line1Ref} className="block">
               THE FUTURE
             </span>
           </span>
           <span className="block overflow-hidden">
-            <span ref={line2Ref} className="block" style={{ transform: 'translateY(110%)' }}>
+            <span ref={line2Ref} className="block">
               DOESN&apos;T WAIT.{' '}
               <span className="text-orange">NEITHER DO WE.</span>
             </span>
