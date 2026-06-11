@@ -17,7 +17,7 @@ const FOUNDER_TWO = {
   name: 'Tao Santimakorn',
   role: 'Tech · Systems · AI',
   bio: "Tao sees AI not as a trend but as infrastructure — the operating layer for the next generation of businesses. With a background in technology and systems design, he architects the workflows, tools, and technical foundations that let HumanxMachine move at a pace most studios won't attempt.",
-  imageUrl: 'https://d8j0ntlcm91z4.cloudfront.net/user_30lCjEHvkkiAR5LQAmCXIgasWyv/hf_20260611_141650_0a29d0b3-f3b9-406e-b522-ba32f9bf86b5_min.webp',
+  imageUrl: 'https://d8j0ntlcm91z4.cloudfront.net/user_30lCjEHvkkiAR5LQAmCXIgasWyv/hf_20260611_145403_e8fc897c-b211-4bc3-bea2-d5d990e81469_min.webp',
 }
 
 export default function AboutPage() {
