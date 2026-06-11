@@ -36,6 +36,11 @@ export function WorkCard({ project, index, className = '', imageHeight = 300 }: 
           <div className="w-full h-full bg-dark-border" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-60 group-hover:opacity-85 transition-opacity duration-300" />
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <span className="font-mono text-[10px] tracking-[2px] text-white uppercase bg-black/50 px-4 py-2 rounded-[2px] backdrop-blur-sm">
+            View Project →
+          </span>
+        </div>
         <div className="absolute top-4 right-4 w-8 h-8 bg-orange rounded-[2px] flex items-center justify-center text-white text-sm font-bold opacity-0 -translate-y-2 translate-x-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-300">
           ↗
         </div>

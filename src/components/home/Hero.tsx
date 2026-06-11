@@ -38,6 +38,12 @@ export function Hero() {
           .fromTo(actionsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 1.1)
           .fromTo(hintRef.current, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: 'power3.out' }, 1.4)
       })
+
+      setTimeout(() => {
+        if (!cancelled && pixelRef.current) {
+          pixelRef.current.classList.add('pixel-pulse')
+        }
+      }, 2400)
     })
 
     return () => {
