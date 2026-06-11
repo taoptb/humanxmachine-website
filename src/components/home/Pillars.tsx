@@ -2,11 +2,36 @@
 
 import { useEffect, useRef } from 'react'
 import { Tag } from '@/components/ui/Tag'
-import { PixelIcon } from '@/components/ui/PixelIcon'
 import { loadGSAP, scrollSlideIn } from '@/lib/animations'
 
 const PILLAR_ONE_TAGS = ['Brand Strategy', 'Identity Design', 'Biz Systems', 'AI Workflows']
 const PILLAR_TWO_TAGS = ['Content Strategy', 'Video / Photo', 'Distribution', 'AI Production']
+
+function BusinessIcon() {
+  return (
+    <div className="w-14 h-14 bg-white border border-[#e0dfd9] flex items-center justify-center rounded-sm">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="18" width="6" height="7" fill="#12120f" />
+        <rect x="11" y="13" width="6" height="12" fill="#12120f" />
+        <rect x="19" y="7" width="6" height="18" fill="#ff4d00" />
+        <rect x="19" y="3" width="6" height="2" fill="#ff4d00" opacity="0.4" />
+      </svg>
+    </div>
+  )
+}
+
+function ProductionIcon() {
+  return (
+    <div className="w-14 h-14 bg-white border border-[#d0cfc9] flex items-center justify-center rounded-sm">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="7" width="18" height="14" rx="1.5" stroke="#12120f" strokeWidth="1.5" />
+        <path d="M20 12L26 9V19L20 16V12Z" fill="#ff4d00" />
+        <circle cx="11" cy="14" r="3.5" stroke="#12120f" strokeWidth="1.5" />
+        <circle cx="11" cy="14" r="1.2" fill="#ff4d00" />
+      </svg>
+    </div>
+  )
+}
 
 export function Pillars() {
   const leftRef = useRef<HTMLDivElement>(null)
@@ -14,7 +39,7 @@ export function Pillars() {
 
   useEffect(() => {
     if (!leftRef.current || !rightRef.current) return
-    let ctx: any
+    let ctx: any // eslint-disable-line @typescript-eslint/no-explicit-any
     let cancelled = false
 
     loadGSAP().then(({ gsap }) => {
@@ -42,8 +67,9 @@ export function Pillars() {
         <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-6">
           Pillar 01
         </p>
+        <BusinessIcon />
         <h2
-          className="font-headline font-bold tracking-tighter leading-[1.1] text-white mb-5"
+          className="font-headline font-bold tracking-tighter leading-[1.1] text-white mt-6 mb-5"
           style={{ fontSize: 'clamp(28px, 3vw, 40px)' }}
         >
           Business<br />Creation
@@ -59,10 +85,6 @@ export function Pillars() {
             </Tag>
           ))}
         </div>
-        {/* Pixel decoration */}
-        <div className="absolute bottom-8 right-8 opacity-[0.08]">
-          <PixelIcon name="x" size={16} />
-        </div>
       </div>
 
       {/* Pillar 02 — light */}
@@ -73,8 +95,9 @@ export function Pillars() {
         <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-6">
           Pillar 02
         </p>
+        <ProductionIcon />
         <h2
-          className="font-headline font-bold tracking-tighter leading-[1.1] text-black mb-5"
+          className="font-headline font-bold tracking-tighter leading-[1.1] text-black mt-6 mb-5"
           style={{ fontSize: 'clamp(28px, 3vw, 40px)' }}
         >
           Creative<br />Production
@@ -89,10 +112,6 @@ export function Pillars() {
               {tag}
             </Tag>
           ))}
-        </div>
-        {/* Pixel decoration */}
-        <div className="absolute bottom-8 right-8 opacity-[0.06]">
-          <PixelIcon name="plus" size={16} color="#12120f" />
         </div>
       </div>
 

@@ -1,13 +1,25 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { loadGSAP, scrollReveal, drawLine } from '@/lib/animations'
+import { loadGSAP, scrollReveal } from '@/lib/animations'
 
-const STEPS = [
-  { num: '01', name: 'Discover', desc: 'Deep dive into your vision, market, and the gaps that need filling.' },
-  { num: '02', name: 'Define', desc: 'Strategy, identity, and systems blueprint tailored to your ambition.' },
-  { num: '03', name: 'Create', desc: 'Production — design, content, campaigns — executed at pace.' },
-  { num: '04', name: 'Scale', desc: 'Distribution, iteration, and growth systems built to compound.' },
+const DECLARATIONS = [
+  {
+    statement: 'We start at the end.',
+    detail: 'Most engagements begin with discovery. Ours begin with the outcome you need — then we reverse-engineer how to get there. No 6-week onboarding. No strategy decks that sit on a shelf.',
+  },
+  {
+    statement: 'Days, not decks.',
+    detail: "We don't disappear into a creative black box. You see real work in days. We build, you react, we improve. The feedback loop is fast by design — because iteration is cheaper than perfection.",
+  },
+  {
+    statement: 'AI does the heavy lifting.',
+    detail: 'Every project runs an AI engine underneath — research, ideation, production, QC. This is how we move at a pace that shouldn\'t be possible for a two-person studio. It is, and it\'s the point.',
+  },
+  {
+    statement: 'We stop when it\'s right.',
+    detail: "Not when the retainer runs out. Not when the deck looks polished. When the work is actually good and you're actually proud of it — that's when we're done.",
+  },
 ]
 
 export function Process() {
@@ -17,7 +29,7 @@ export function Process() {
 
   useEffect(() => {
     if (!sectionRef.current) return
-    let ctx: any
+    let ctx: any // eslint-disable-line @typescript-eslint/no-explicit-any
     let cancelled = false
 
     loadGSAP().then(({ gsap }) => {
@@ -26,11 +38,9 @@ export function Process() {
         scrollReveal(labelRef.current!, { y: 15 })
         scrollReveal(headlineRef.current!, { y: 20, delay: 0.1 })
 
-        const steps = sectionRef.current!.querySelectorAll('.process-step')
-        steps.forEach((step, i) => {
-          scrollReveal(step as Element, { y: 30, delay: i * 0.1 })
-          const line = step.querySelector('.step-line')
-          if (line) drawLine(line, { delay: i * 0.1 + 0.3 })
+        const items = sectionRef.current!.querySelectorAll('.declaration-item')
+        items.forEach((item, i) => {
+          scrollReveal(item as Element, { y: 24, delay: i * 0.08 })
         })
       })
     })
@@ -52,20 +62,22 @@ export function Process() {
           className="font-headline font-bold tracking-tightest text-white mb-16 opacity-0"
           style={{ fontSize: 'clamp(32px, 4vw, 52px)' }}
         >
-          From Idea<br />to Impact
+          We don&apos;t do<br />
+          <span className="text-orange">waterfall.</span>
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {STEPS.map((step) => (
-            <div key={step.num} className="process-step opacity-0">
-              <div className="font-headline font-bold text-[48px] tracking-tightest text-[#1f1f1c] leading-none mb-4">
-                {step.num}
-              </div>
-              <div className="step-line w-full h-px bg-[#222] mb-4" style={{ transformOrigin: 'left center' }} />
-              <h3 className="font-headline font-bold text-[15px] text-white mb-2">
-                {step.name}
+        <div className="flex flex-col divide-y divide-dark-border">
+          {DECLARATIONS.map((d, i) => (
+            <div key={i} className="declaration-item opacity-0 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-4 md:gap-16 py-10">
+              <h3
+                className="font-headline font-bold text-white leading-tight"
+                style={{ fontSize: 'clamp(20px, 2vw, 26px)' }}
+              >
+                {d.statement}
               </h3>
-              <p className="text-[13px] text-[#444] leading-[1.6]">{step.desc}</p>
+              <p className="text-[14px] text-[#555] leading-[1.8] self-center">
+                {d.detail}
+              </p>
             </div>
           ))}
         </div>

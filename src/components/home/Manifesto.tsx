@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { loadGSAP, scrollReveal, wordReveal } from '@/lib/animations'
 
 const MANIFESTO =
-  "Most agencies are still deciding how to feel about AI. We already used it to build a luxury brand, design a cyborg identity system, and produce a commercial campaign — this week."
+  "We didn't set out to build an agency. We set out to prove that two people with the right tools can outthink a team of twenty."
 
 export function Manifesto() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -61,8 +61,9 @@ export function Manifesto() {
           ref={bodyRef}
           className="max-w-xl mt-10 text-[15px] text-[#555] leading-[1.8] opacity-0"
         >
-          HumanxMachine is where strategy meets execution, where creativity meets
-          systems, and where founders meet the future they&apos;re trying to build.
+          We bring real experience — from building brands that last to shipping campaigns
+          that move culture — and we pair it with AI that makes every hour count for three.
+          We&apos;re not here to impress you with our process. We&apos;re here to build your thing.
         </p>
       </div>
     </section>

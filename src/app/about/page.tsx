@@ -5,17 +5,19 @@ import { Button } from '@/components/ui/Button'
 import { loadGSAP } from '@/lib/animations'
 
 const FOUNDER_ONE = {
-  initials: 'F1',
-  name: 'Founder Name',
+  initials: 'O',
+  name: 'Ong Santimakorn',
   role: 'Brand · Strategy · Vision',
-  bio: 'Background in brand building and creative strategy. Spent years in the industry before deciding to build something that moves faster, thinks bigger, and operates at a completely different altitude.',
+  bio: "Ong has spent his career shaping brands that move in culture — from startups to established names across Asia. Co-founding HumanxMachine was a natural next step: building the studio he always wished existed. He leads strategy, brand identity, and the creative vision that ties everything together.",
+  imageUrl: 'https://d8j0ntlcm91z4.cloudfront.net/user_30lCjEHvkkiAR5LQAmCXIgasWyv/hf_20260611_141648_ae4f2731-6ba1-4f00-b8c6-abc93e5b75f4_min.webp',
 }
 
 const FOUNDER_TWO = {
-  initials: 'F2',
-  name: 'Founder Name',
+  initials: 'T',
+  name: 'Tao Santimakorn',
   role: 'Tech · Systems · AI',
-  bio: 'Background in technology and systems design. Sees AI not as a trend but as infrastructure — the operating layer for the next generation of businesses and the people who build them.',
+  bio: "Tao sees AI not as a trend but as infrastructure — the operating layer for the next generation of businesses. With a background in technology and systems design, he architects the workflows, tools, and technical foundations that let HumanxMachine move at a pace most studios won't attempt.",
+  imageUrl: 'https://d8j0ntlcm91z4.cloudfront.net/user_30lCjEHvkkiAR5LQAmCXIgasWyv/hf_20260611_141650_0a29d0b3-f3b9-406e-b522-ba32f9bf86b5_min.webp',
 }
 
 export default function AboutPage() {
@@ -130,24 +132,30 @@ export default function AboutPage() {
       {/* Section 02: Founders */}
       <section ref={foundersRef} className="border-t border-dark-border">
         <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="founder-card bg-dark-surface border-b md:border-b-0 md:border-r border-dark-border px-6 md:px-12 py-16 opacity-0">
-            <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-8">Founder 01</p>
-            <div className="w-14 h-14 rounded-full bg-dark-surface border border-dark-border flex items-center justify-center font-headline font-bold text-orange text-xl mb-6">
-              {FOUNDER_ONE.initials}
+          {[
+            { label: 'Founder 01', data: FOUNDER_ONE, borderClass: 'border-b md:border-b-0 md:border-r border-dark-border' },
+            { label: 'Founder 02', data: FOUNDER_TWO, borderClass: '' },
+          ].map(({ label, data, borderClass }) => (
+            <div key={label} className={`founder-card bg-dark-surface ${borderClass} px-6 md:px-12 py-16 opacity-0`}>
+              <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-8">{label}</p>
+              <div className="mb-6">
+                {data.imageUrl ? (
+                  <img
+                    src={data.imageUrl}
+                    alt={data.name}
+                    className="w-24 h-24 object-cover rounded-sm border border-dark-border"
+                  />
+                ) : (
+                  <div className="w-16 h-16 rounded-sm bg-dark-surface border border-dark-border flex items-center justify-center font-headline font-bold text-orange text-2xl">
+                    {data.initials}
+                  </div>
+                )}
+              </div>
+              <h2 className="font-headline font-bold text-white text-2xl tracking-tight mb-1">{data.name}</h2>
+              <p className="font-mono text-[9px] tracking-[2px] text-[#444] uppercase mb-6">{data.role}</p>
+              <p className="text-[14px] text-[#555] leading-[1.75]">{data.bio}</p>
             </div>
-            <h2 className="font-headline font-bold text-white text-2xl tracking-tight mb-1">{FOUNDER_ONE.name}</h2>
-            <p className="font-mono text-[9px] tracking-[2px] text-[#444] uppercase mb-6">{FOUNDER_ONE.role}</p>
-            <p className="text-[14px] text-[#555] leading-[1.75]">{FOUNDER_ONE.bio}</p>
-          </div>
-          <div className="founder-card bg-dark-surface px-6 md:px-12 py-16 opacity-0">
-            <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-8">Founder 02</p>
-            <div className="w-14 h-14 rounded-full bg-dark-surface border border-dark-border flex items-center justify-center font-headline font-bold text-orange text-xl mb-6">
-              {FOUNDER_TWO.initials}
-            </div>
-            <h2 className="font-headline font-bold text-white text-2xl tracking-tight mb-1">{FOUNDER_TWO.name}</h2>
-            <p className="font-mono text-[9px] tracking-[2px] text-[#444] uppercase mb-6">{FOUNDER_TWO.role}</p>
-            <p className="text-[14px] text-[#555] leading-[1.75]">{FOUNDER_TWO.bio}</p>
-          </div>
+          ))}
         </div>
       </section>
 

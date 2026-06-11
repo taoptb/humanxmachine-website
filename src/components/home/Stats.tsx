@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'react'
 import { countUp } from '@/lib/animations'
 
 const STATS = [
-  { value: 128, label: 'Projects', suffix: '' },
-  { value: 23, label: 'Markets', suffix: '' },
-  { value: 98, label: 'Impact', suffix: '%' },
+  { value: 300, label: 'Creators Enrolled', suffix: '+' },
+  { value: 60, label: 'Brands Launched', suffix: '+' },
+  { value: 14, label: 'Days to First Delivery', suffix: '' },
 ]
 
 export function Stats() {
@@ -41,15 +41,23 @@ export function Stats() {
     >
       {STATS.map((stat) => (
         <div key={stat.label} className="text-center px-5">
-          <span
-            data-stat={stat.value}
-            className="font-headline font-bold text-white leading-none block"
-            style={{ fontSize: 'clamp(40px, 8vw, 96px)', letterSpacing: '-3px' }}
-          >
-            0
-          </span>
+          <div className="inline-flex items-baseline leading-none">
+            <span
+              data-stat={stat.value}
+              className="font-headline font-bold text-white"
+              style={{ fontSize: 'clamp(40px, 8vw, 96px)', letterSpacing: '-3px' }}
+            >
+              0
+            </span>
+            <span
+              className="font-headline font-bold text-white/70 ml-1"
+              style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}
+            >
+              {stat.suffix}
+            </span>
+          </div>
           <span className="font-mono text-[10px] tracking-[3px] uppercase text-white/50 mt-2 block">
-            {stat.suffix}{stat.label}
+            {stat.label}
           </span>
         </div>
       ))}
