@@ -1,7 +1,15 @@
+import type { Metadata } from 'next'
 import { getInsights } from '@/lib/notion'
 import { InsightCard } from '@/components/insights/InsightCard'
 
 export const revalidate = 3600
+
+export const metadata: Metadata = {
+  title: 'Insights — HumanxMachine',
+  description: 'Perspectives on brand, culture, AI, and the future of creative business.',
+  openGraph: { title: 'Insights — HumanxMachine', description: 'Perspectives on brand, culture, and AI.', images: [{ url: '/opengraph-image' }] },
+  twitter: { card: 'summary_large_image' },
+}
 
 export default async function InsightsPage() {
   const insights = await getInsights()

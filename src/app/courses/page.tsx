@@ -1,9 +1,17 @@
 // src/app/courses/page.tsx
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import { getCourses } from '@/lib/notion'
 import type { Course } from '@/types'
 
 export const revalidate = 3600
+
+export const metadata: Metadata = {
+  title: 'Courses — HumanxMachine',
+  description: 'Learn the systems we use every day — brand building, content production, and AI workflows.',
+  openGraph: { title: 'Courses — HumanxMachine', description: 'Learn brand, content, and AI systems.', images: [{ url: '/opengraph-image' }] },
+  twitter: { card: 'summary_large_image' },
+}
 
 function CourseCard({ course }: { course: Course }) {
   return (

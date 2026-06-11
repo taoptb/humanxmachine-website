@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About — HumanxMachine',
     description: 'The story behind HumanxMachine.',
+    images: [{ url: '/opengraph-image' }],
   },
   twitter: { card: 'summary_large_image' },
 }

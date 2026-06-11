@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,6 +9,22 @@ export const revalidate = 3600
 export async function generateStaticParams() {
   const projects = await getWorkProjects()
   return projects.map((p) => ({ slug: p.slug }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const project = await getWorkProject(slug)
+  if (!project) return { title: 'Work — HumanxMachine' }
+  return {
+    title: `${project.title} — HumanxMachine`,
+    description: project.description || `${project.category} project by HumanxMachine.`,
+    openGraph: {
+      title: project.title,
+      description: project.description || '',
+      images: [{ url: `/work/${slug}/opengraph-image` }],
+    },
+    twitter: { card: 'summary_large_image' },
+  }
 }
 
 export default async function CaseStudyPage({

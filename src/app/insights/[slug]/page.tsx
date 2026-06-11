@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { getInsight, getInsights, getInsightPageBlocks } from '@/lib/notion'
@@ -7,6 +8,22 @@ export const revalidate = 3600
 export async function generateStaticParams() {
   const insights = await getInsights()
   return insights.map((i) => ({ slug: i.slug }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const insight = await getInsight(slug)
+  if (!insight) return { title: 'Insights — HumanxMachine' }
+  return {
+    title: `${insight.title} — HumanxMachine`,
+    description: insight.excerpt || 'An insight from HumanxMachine.',
+    openGraph: {
+      title: insight.title,
+      description: insight.excerpt || '',
+      images: [{ url: `/insights/${slug}/opengraph-image` }],
+    },
+    twitter: { card: 'summary_large_image' },
+  }
 }
 
 function renderBlock(block: any): React.ReactNode { // eslint-disable-line @typescript-eslint/no-explicit-any

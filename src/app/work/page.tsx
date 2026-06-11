@@ -1,7 +1,15 @@
+import type { Metadata } from 'next'
 import { getWorkProjects } from '@/lib/notion'
 import { WorkGrid } from '@/components/work/WorkGrid'
 
 export const revalidate = 3600
+
+export const metadata: Metadata = {
+  title: 'Work — HumanxMachine',
+  description: 'Selected work: business creation, creative production, and original IP — all powered by AI.',
+  openGraph: { title: 'Work — HumanxMachine', description: 'Selected work powered by AI.', images: [{ url: '/opengraph-image' }] },
+  twitter: { card: 'summary_large_image' },
+}
 
 export default async function WorkPage() {
   const projects = await getWorkProjects()

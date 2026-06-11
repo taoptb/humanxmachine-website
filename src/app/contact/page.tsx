@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
 import { ContactForm } from '@/components/contact/ContactForm'
 import { PixelIcon } from '@/components/ui/PixelIcon'
+
+export const metadata: Metadata = {
+  title: 'Start a Project — HumanxMachine',
+  description: "Tell us what you're building. We read every submission and reply within 24 hours.",
+  openGraph: { title: 'Start a Project — HumanxMachine', description: "Let's build something at the edge.", images: [{ url: '/opengraph-image' }] },
+  twitter: { card: 'summary_large_image' },
+}
 
 export default function ContactPage() {
   return (

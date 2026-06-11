@@ -1,6 +1,14 @@
 // src/app/services/page.tsx
+import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
 import { PixelIcon } from '@/components/ui/PixelIcon'
+
+export const metadata: Metadata = {
+  title: 'Services — HumanxMachine',
+  description: 'Business Creation and Creative Production services — from zero to brand, from idea to distribution.',
+  openGraph: { title: 'Services — HumanxMachine', description: 'Business Creation & Creative Production powered by AI.', images: [{ url: '/opengraph-image' }] },
+  twitter: { card: 'summary_large_image' },
+}
 
 const PILLAR_ONE_SERVICES = [
   { name: 'Brand Strategy', desc: 'Positioning, messaging framework, and competitive differentiation.' },
