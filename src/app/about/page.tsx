@@ -30,7 +30,7 @@ export default function AboutPage() {
     let ctx: any
     let cancelled = false
 
-    loadGSAP().then(({ gsap, ScrollTrigger }) => {
+    loadGSAP().then(({ gsap }) => {
       if (cancelled) return
       ctx = gsap.context(() => {
         // Hero entrance
@@ -117,8 +117,7 @@ export default function AboutPage() {
           </h1>
           <p
             ref={heroSubRef}
-            className="text-[15px] text-[#666] leading-[1.7] max-w-lg"
-            style={{ opacity: 0 }}
+            className="text-[15px] text-[#666] leading-[1.7] max-w-lg opacity-0"
           >
             Two experienced founders who believe the rules have changed.
             You don&apos;t need a big team or large capital to build something
@@ -131,7 +130,7 @@ export default function AboutPage() {
       {/* Section 02: Founders */}
       <section ref={foundersRef} className="border-t border-dark-border">
         <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="founder-card bg-black border-b md:border-b-0 md:border-r border-dark-border px-6 md:px-12 py-16" style={{ opacity: 0 }}>
+          <div className="founder-card bg-dark-surface border-b md:border-b-0 md:border-r border-dark-border px-6 md:px-12 py-16 opacity-0">
             <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-8">Founder 01</p>
             <div className="w-14 h-14 rounded-full bg-dark-surface border border-dark-border flex items-center justify-center font-headline font-bold text-orange text-xl mb-6">
               {FOUNDER_ONE.initials}
@@ -140,7 +139,7 @@ export default function AboutPage() {
             <p className="font-mono text-[9px] tracking-[2px] text-[#444] uppercase mb-6">{FOUNDER_ONE.role}</p>
             <p className="text-[14px] text-[#555] leading-[1.75]">{FOUNDER_ONE.bio}</p>
           </div>
-          <div className="founder-card bg-black px-6 md:px-12 py-16" style={{ opacity: 0 }}>
+          <div className="founder-card bg-dark-surface px-6 md:px-12 py-16 opacity-0">
             <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-8">Founder 02</p>
             <div className="w-14 h-14 rounded-full bg-dark-surface border border-dark-border flex items-center justify-center font-headline font-bold text-orange text-xl mb-6">
               {FOUNDER_TWO.initials}
@@ -155,19 +154,19 @@ export default function AboutPage() {
       {/* Section 03: Philosophy */}
       <section ref={philRef} className="bg-black border-t border-dark-border px-6 md:px-10 py-20 md:py-28">
         <div style={{ maxWidth: '1440px', margin: '0 auto' }}>
-          <p className="phil-el font-mono text-[9px] tracking-[3px] text-[#444] uppercase mb-12" style={{ opacity: 0 }}>
+          <p className="phil-el font-mono text-[9px] tracking-[3px] text-[#444] uppercase mb-12 opacity-0">
             02 — Our Belief
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
             <h2
-              className="phil-el font-headline font-bold tracking-tighter text-white leading-[1.05]"
-              style={{ fontSize: 'clamp(28px, 3.5vw, 48px)', opacity: 0 }}
+              className="phil-el font-headline font-bold tracking-tighter text-white leading-[1.05] opacity-0"
+              style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}
             >
               AI doesn&apos;t replace you.<br />
               It <span className="text-orange">completes you.</span>
             </h2>
             <div>
-              <p className="phil-el text-[14px] text-[#555] leading-[1.8] mb-8" style={{ opacity: 0 }}>
+              <p className="phil-el text-[14px] text-[#555] leading-[1.8] mb-8 opacity-0">
                 Every founder has gaps — skills they don&apos;t have, capacity they
                 can&apos;t afford to hire. AI fills those gaps. It&apos;s a creative director,
                 a copywriter, a developer, a researcher, and a strategist —
@@ -179,7 +178,7 @@ export default function AboutPage() {
                   "Speed is a strategy. Moving fast with AI isn't reckless — it's the new competitive advantage.",
                   "From before impossible to infinite possibilities — that's the only direction we move.",
                 ].map((belief, i) => (
-                  <li key={i} className="phil-el flex gap-4 items-start" style={{ opacity: 0 }}>
+                  <li key={i} className="phil-el flex gap-4 items-start opacity-0">
                     <span className="w-1.5 h-1.5 rounded-full bg-orange mt-2 flex-shrink-0" />
                     <p className="text-[13px] text-[#555] leading-[1.7]">{belief}</p>
                   </li>
@@ -195,8 +194,8 @@ export default function AboutPage() {
         <div style={{ maxWidth: '1440px', margin: '0 auto' }}>
           <p
             ref={statementRef}
-            className="font-headline font-bold text-white leading-[1.05] tracking-tighter"
-            style={{ fontSize: 'clamp(28px, 4.5vw, 56px)', opacity: 0 }}
+            className="font-headline font-bold text-white leading-[1.05] tracking-tighter opacity-0"
+            style={{ fontSize: 'clamp(28px, 4.5vw, 56px)' }}
           >
             You don&apos;t need a bigger team.<br />
             You need better tools.
