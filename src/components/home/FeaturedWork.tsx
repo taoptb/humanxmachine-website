@@ -22,7 +22,7 @@ export function FeaturedWork({ projects }: FeaturedWorkProps) {
 
   useEffect(() => {
     if (!headerRef.current || !gridRef.current) return
-    let ctx: any
+    let ctx: any // eslint-disable-line @typescript-eslint/no-explicit-any
     let cancelled = false
 
     loadGSAP().then(({ gsap }) => {
@@ -31,6 +31,35 @@ export function FeaturedWork({ projects }: FeaturedWorkProps) {
         scrollReveal(headerRef.current!, { y: 20, duration: 0.7 })
         const cards = gridRef.current!.querySelectorAll('.work-card')
         scrollReveal(Array.from(cards) as Element[], { y: 30, stagger: 0.12, duration: 0.8 })
+
+        // 3D tilt on hover
+        cards.forEach((card) => {
+          const el = card as HTMLElement
+          const MAX_TILT = 8
+
+          const onEnter = () => {
+            gsap.to(el, { transformPerspective: 800, duration: 0.3, ease: 'power2.out' })
+          }
+          const onMove = (e: Event) => {
+            const me = e as MouseEvent
+            const rect = el.getBoundingClientRect()
+            const x = (me.clientX - rect.left) / rect.width  - 0.5
+            const y = (me.clientY - rect.top)  / rect.height - 0.5
+            gsap.to(el, {
+              rotateY:  x * MAX_TILT * 2,
+              rotateX: -y * MAX_TILT * 2,
+              duration: 0.4,
+              ease: 'power2.out',
+            })
+          }
+          const onLeave = () => {
+            gsap.to(el, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power3.out' })
+          }
+
+          el.addEventListener('mouseenter', onEnter)
+          el.addEventListener('mousemove',  onMove)
+          el.addEventListener('mouseleave', onLeave)
+        })
       })
     })
 
@@ -62,6 +91,7 @@ export function FeaturedWork({ projects }: FeaturedWorkProps) {
               key={project.slug}
               href={`/work/${project.slug}`}
               className="work-card group relative rounded overflow-hidden opacity-0 block bg-[#f0efe9]"
+              style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
             >
               {/* Thumbnail */}
               <div className="relative h-56 overflow-hidden">
