@@ -31,11 +31,11 @@ export function Manifesto() {
   const words = MANIFESTO.split(' ')
 
   return (
-    <section className="bg-white px-6 md:px-10 py-16 md:py-28 border-t border-[#E2E2DF]">
+    <section className="bg-black border-t border-dark-border px-6 md:px-10 py-16 md:py-28">
       <div className="max-w-5xl mx-auto">
         <div
           ref={labelRef}
-          className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-10 opacity-0"
+          className="font-mono text-[9px] tracking-[3px] text-[#444] uppercase mb-10 opacity-0"
         >
           02 — Philosophy
         </div>
@@ -50,7 +50,7 @@ export function Manifesto() {
               key={i}
               data-word
               className="inline-block mr-[0.25em]"
-              style={{ color: '#ccc' }}
+              style={{ color: '#333' }}
             >
               {word}
             </span>
@@ -59,7 +59,7 @@ export function Manifesto() {
 
         <p
           ref={bodyRef}
-          className="max-w-xl mt-10 text-[15px] text-[#888] leading-[1.8] opacity-0"
+          className="max-w-xl mt-10 text-[15px] text-[#555] leading-[1.8] opacity-0"
         >
           We bring real experience — from building brands that last to shipping campaigns
           that move culture — and we pair it with AI that makes every hour count for three.

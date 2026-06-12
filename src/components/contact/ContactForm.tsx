@@ -37,14 +37,14 @@ export function ContactForm() {
     return (
       <div className="text-center py-16">
         <div className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-4">Message received</div>
-        <h2 className="font-headline font-bold text-3xl tracking-tight text-[#12120f] mb-3">We&apos;ll be in touch.</h2>
-        <p className="text-[#888] text-sm">Usually within 24 hours.</p>
+        <h2 className="font-headline font-bold text-3xl tracking-tight text-white mb-3">We&apos;ll be in touch.</h2>
+        <p className="text-[#555] text-sm">Usually within 24 hours.</p>
       </div>
     )
   }
 
-  const inputCls = 'w-full bg-white border border-[#E2E2DF] text-[#12120f] font-body text-[14px] px-4 py-3.5 rounded-[2px] focus:outline-none focus:border-orange transition-colors placeholder:text-[#bbb]'
-  const labelCls = 'font-mono text-[9px] tracking-[2px] text-[#aaa] uppercase mb-2 block'
+  const inputCls = 'w-full bg-dark-surface border border-dark-border text-white font-body text-[14px] px-4 py-3.5 rounded-[2px] focus:outline-none focus:border-orange transition-colors placeholder:text-[#333]'
+  const labelCls = 'font-mono text-[9px] tracking-[2px] text-[#444] uppercase mb-2 block'
 
   return (
     <form onSubmit={submit} className="space-y-6">

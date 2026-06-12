@@ -57,30 +57,30 @@ export function Pillars() {
   }, [])
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 border-t border-[#E2E2DF]">
+    <div className="grid grid-cols-1 md:grid-cols-2 border-t border-dark-border">
 
-      {/* Pillar 01 — light */}
+      {/* Pillar 01 — dark */}
       <div
         ref={leftRef}
-        className="bg-[#F7F7F7] border-b md:border-b-0 md:border-r border-[#E2E2DF] px-6 md:px-12 py-14 md:py-20 relative overflow-hidden opacity-0"
+        className="bg-black border-b md:border-b-0 md:border-r border-dark-border px-6 md:px-12 py-14 md:py-20 relative overflow-hidden opacity-0"
       >
         <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-6">
           Pillar 01
         </p>
         <BusinessIcon />
         <h2
-          className="font-headline font-bold tracking-tighter leading-[1.1] text-[#12120f] mt-6 mb-5"
+          className="font-headline font-bold tracking-tighter leading-[1.1] text-white mt-6 mb-5"
           style={{ fontSize: 'clamp(28px, 3vw, 40px)' }}
         >
           Business<br />Creation
         </h2>
-        <p className="text-[15px] text-[#777] leading-[1.75] mb-8 max-w-sm">
+        <p className="text-[15px] text-[#555] leading-[1.75] mb-8 max-w-sm">
           From zero to brand. We build the identity, strategy, and systems
           founders need to launch with confidence and scale with clarity.
         </p>
         <div className="flex flex-wrap gap-2">
           {PILLAR_ONE_TAGS.map((tag, i) => (
-            <Tag key={i} variant={i === 0 ? 'filled' : 'outline-light'}>
+            <Tag key={i} variant={i === 0 ? 'filled' : 'outline-dark'}>
               {tag}
             </Tag>
           ))}

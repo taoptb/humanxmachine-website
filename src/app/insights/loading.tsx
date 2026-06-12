@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/Skeleton'
 
 export default function InsightsLoading() {
   return (
-    <main className="bg-[#F7F7F7] min-h-screen pt-24 px-6 md:px-10 pb-20">
+    <main className="bg-black min-h-screen pt-24 px-6 md:px-10 pb-20">
       <div style={{ maxWidth: '1440px', margin: '0 auto' }}>
         <Skeleton className="h-3 w-24 mb-4" />
         <Skeleton className="h-14 w-40 mb-12" />

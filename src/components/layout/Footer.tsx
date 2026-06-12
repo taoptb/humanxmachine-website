@@ -59,11 +59,11 @@ const SOCIAL_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="relative bg-[#0e0e0b] border-t border-[#2a2a27] overflow-hidden">
+    <footer className="relative bg-[#0e0e0b] border-t border-dark-border overflow-hidden">
       <div className="px-6 md:px-10 py-16" style={{ maxWidth: '1440px', margin: '0 auto' }}>
 
         {/* Top row — logo + tagline */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-14 pb-10 border-b border-[#2a2a27]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-14 pb-10 border-b border-dark-border">
           <Link href="/">
             <Image
               src="/logo/logo-text.svg"
@@ -140,7 +140,7 @@ export function Footer() {
         </div>
 
         {/* Bottom row — legal */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pt-8 border-t border-[#2a2a27]">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pt-8 border-t border-dark-border">
           <p className="font-mono text-[10px] text-[#333]">
             © 2026 HumanxMachine. All rights reserved.
           </p>

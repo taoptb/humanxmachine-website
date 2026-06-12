@@ -45,31 +45,31 @@ function renderBlock(block: any): React.ReactNode { // eslint-disable-line @type
       let content: React.ReactNode = t.plain_text
       if (t.annotations?.bold) content = <strong key={i}>{content}</strong>
       if (t.annotations?.italic) content = <em key={i}>{content}</em>
-      if (t.annotations?.code) content = <code key={i} className="bg-[#F0F0ED] border border-[#E2E2DF] px-1.5 py-0.5 rounded text-orange text-sm font-mono">{content}</code>
+      if (t.annotations?.code) content = <code key={i} className="bg-dark-surface px-1.5 py-0.5 rounded text-orange text-sm font-mono">{content}</code>
       if (t.href) content = <a key={i} href={t.href} target="_blank" rel="noopener noreferrer" className="text-orange underline underline-offset-2 hover:text-orange/70 transition-colors">{content}</a>
       return content
     }) ?? null
 
   switch (type) {
     case 'paragraph':
-      return <p key={id} className="text-[15px] text-[#666] leading-relaxed mb-5">{richText(value.rich_text)}</p>
+      return <p key={id} className="text-[15px] text-[#999] leading-relaxed mb-5">{richText(value.rich_text)}</p>
     case 'heading_1':
-      return <h2 key={id} className="font-headline font-bold text-3xl tracking-tight text-[#12120f] mt-12 mb-4">{richText(value.rich_text)}</h2>
+      return <h2 key={id} className="font-headline font-bold text-3xl tracking-tight text-white mt-12 mb-4">{richText(value.rich_text)}</h2>
     case 'heading_2':
-      return <h3 key={id} className="font-headline font-bold text-2xl tracking-tight text-[#12120f] mt-10 mb-3">{richText(value.rich_text)}</h3>
+      return <h3 key={id} className="font-headline font-bold text-2xl tracking-tight text-white mt-10 mb-3">{richText(value.rich_text)}</h3>
     case 'heading_3':
-      return <h4 key={id} className="font-headline font-bold text-xl tracking-tight text-[#12120f] mt-8 mb-2">{richText(value.rich_text)}</h4>
+      return <h4 key={id} className="font-headline font-bold text-xl tracking-tight text-white mt-8 mb-2">{richText(value.rich_text)}</h4>
     case 'bulleted_list_item':
-      return <li key={id} className="text-[15px] text-[#666] leading-relaxed mb-2 ml-4 list-disc">{richText(value.rich_text)}</li>
+      return <li key={id} className="text-[15px] text-[#999] leading-relaxed mb-2 ml-4 list-disc">{richText(value.rich_text)}</li>
     case 'numbered_list_item':
-      return <li key={id} className="text-[15px] text-[#666] leading-relaxed mb-2 ml-4 list-decimal">{richText(value.rich_text)}</li>
+      return <li key={id} className="text-[15px] text-[#999] leading-relaxed mb-2 ml-4 list-decimal">{richText(value.rich_text)}</li>
     case 'quote':
-      return <blockquote key={id} className="border-l-2 border-orange pl-5 my-6 text-[15px] text-[#888] italic leading-relaxed">{richText(value.rich_text)}</blockquote>
+      return <blockquote key={id} className="border-l-2 border-orange pl-5 my-6 text-[15px] text-[#777] italic leading-relaxed">{richText(value.rich_text)}</blockquote>
     case 'divider':
-      return <hr key={id} className="border-[#E2E2DF] my-10" />
+      return <hr key={id} className="border-dark-border my-10" />
     case 'code':
       return (
-        <pre key={id} className="bg-[#F0F0ED] border border-[#E2E2DF] rounded p-5 my-6 overflow-x-auto">
+        <pre key={id} className="bg-dark-surface border border-dark-border rounded p-5 my-6 overflow-x-auto">
           <code className="text-[13px] text-orange font-mono leading-relaxed">{value.rich_text?.[0]?.plain_text ?? ''}</code>
         </pre>
       )
@@ -81,7 +81,7 @@ function renderBlock(block: any): React.ReactNode { // eslint-disable-line @type
           <div className="rounded overflow-hidden">
             <Image src={src} alt={caption ?? ''} width={800} height={500} className="w-full object-cover" />
           </div>
-          {caption && <figcaption className="text-center text-[12px] text-[#999] mt-3 font-mono tracking-wide">{caption}</figcaption>}
+          {caption && <figcaption className="text-center text-[12px] text-[#555] mt-3 font-mono tracking-wide">{caption}</figcaption>}
         </figure>
       )
     }
@@ -112,7 +112,7 @@ function renderBlock(block: any): React.ReactNode { // eslint-disable-line @type
         )
       }
       return (
-        <div key={id} className="my-6 border border-[#E2E2DF] rounded p-4 text-[13px] text-[#888]">
+        <div key={id} className="my-6 border border-dark-border rounded p-4 text-[13px] text-[#555]">
           <a href={url} target="_blank" rel="noopener noreferrer" className="text-orange underline break-all">{url}</a>
         </div>
       )
@@ -126,15 +126,15 @@ function renderBlock(block: any): React.ReactNode { // eslint-disable-line @type
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-4 border border-[#E2E2DF] rounded p-4 my-6 hover:border-orange/40 hover:shadow-sm transition-all group"
+          className="flex items-center gap-4 border border-dark-border rounded p-4 my-6 hover:border-orange/40 transition-colors group"
         >
           <div className="min-w-0 flex-1">
-            <p className="text-[13px] text-[#12120f] font-medium truncate group-hover:text-orange transition-colors">
+            <p className="text-[13px] text-white font-medium truncate group-hover:text-orange transition-colors">
               {caption || url}
             </p>
-            <p className="text-[11px] text-[#aaa] truncate mt-0.5">{url}</p>
+            <p className="text-[11px] text-[#555] truncate mt-0.5">{url}</p>
           </div>
-          <span className="text-[#aaa] text-lg flex-shrink-0">→</span>
+          <span className="text-[#555] text-lg flex-shrink-0">→</span>
         </a>
       )
     }
@@ -155,11 +155,11 @@ export default async function ArticlePage({
   const blocks = await getInsightPageBlocks(insight.id)
 
   return (
-    <main className="bg-[#F7F7F7] min-h-screen pt-24">
+    <main className="bg-black min-h-screen pt-24">
       {insight.coverUrl && (
         <div className="relative overflow-hidden" style={{ height: '50vh', minHeight: '320px' }}>
           <Image src={insight.coverUrl} alt={insight.title} fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#F7F7F7] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         </div>
       )}
 
@@ -169,11 +169,11 @@ export default async function ArticlePage({
             <span key={t} className="font-mono text-[8px] tracking-[1.5px] uppercase bg-orange/10 text-orange px-2 py-1 rounded-[2px]">{t}</span>
           ))}
         </div>
-        <h1 className="font-headline font-bold tracking-tightest text-[#12120f] leading-tight mb-4" style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}>
+        <h1 className="font-headline font-bold tracking-tightest text-white leading-tight mb-4" style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}>
           {insight.title}
         </h1>
         {insight.date && (
-          <p className="font-mono text-[10px] tracking-[2px] text-[#bbb] mb-10">
+          <p className="font-mono text-[10px] tracking-[2px] text-[#444] mb-10">
             {new Date(insight.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
         )}

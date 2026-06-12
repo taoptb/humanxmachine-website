@@ -2,25 +2,35 @@
 
 import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/Button'
+import { PixelIcon } from '@/components/ui/PixelIcon'
 import { HeroCanvas } from '@/components/home/HeroCanvas'
 import { loadGSAP } from '@/lib/animations'
 
 export function Hero() {
-  const lineRef = useRef<HTMLDivElement>(null)
+  const eyebrowRef = useRef<HTMLDivElement>(null)
+  const line1Ref = useRef<HTMLSpanElement>(null)
+  const line2Ref = useRef<HTMLSpanElement>(null)
+  const subRef = useRef<HTMLParagraphElement>(null)
+  const actionsRef = useRef<HTMLDivElement>(null)
+  const hintRef = useRef<HTMLDivElement>(null)
+  const pixelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Pixel decoration only — purely decorative, safe to fail
     let ctx: any // eslint-disable-line @typescript-eslint/no-explicit-any
     let cancelled = false
 
     loadGSAP().then(({ gsap }) => {
-      if (cancelled || !lineRef.current) return
+      if (cancelled || !pixelRef.current) return
       ctx = gsap.context(() => {
-        gsap.fromTo(
-          lineRef.current,
-          { scaleY: 0, opacity: 0 },
-          { scaleY: 1, opacity: 1, duration: 1.4, delay: 1.2, ease: 'power3.out', transformOrigin: 'top' }
+        gsap.fromTo(pixelRef.current,
+          { opacity: 0, scale: 0.8, rotation: -5 },
+          { opacity: 0.12, scale: 1, rotation: 0, duration: 1.4, delay: 1.2, ease: 'power3.out' }
         )
       })
+      setTimeout(() => {
+        if (!cancelled) pixelRef.current?.classList.add('pixel-pulse')
+      }, 2800)
     })
 
     return () => {
@@ -30,83 +40,69 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="hero-section relative min-h-screen bg-[#F7F7F7] flex flex-col justify-center px-6 md:px-14 overflow-hidden">
+    <section className="hero-section relative min-h-screen bg-black flex flex-col justify-end px-6 md:px-10 pb-16 md:pb-20 pt-28 md:pt-32 overflow-hidden">
 
-      {/* 3D cube grid — fills the right side of the hero */}
+      {/* WebGL pixel grid background */}
       <HeroCanvas />
 
-      {/* Left-side gradient so text stays readable over the 3D scene */}
-      <div
-        className="absolute inset-y-0 left-0 pointer-events-none"
-        style={{ width: '68%', background: 'linear-gradient(to right, rgba(247,247,247,0.97) 42%, transparent)' }}
-      />
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black to-transparent pointer-events-none" />
 
-      {/* Bottom fade into next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F7F7F7] to-transparent pointer-events-none" />
+      {/* Pixel symbol decoration — top right */}
+      <div ref={pixelRef} className="absolute top-24 right-14 opacity-0">
+        <PixelIcon name="face" size={20} />
+      </div>
 
-      {/* Top fade (under nav) */}
-      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#F7F7F7] to-transparent pointer-events-none" />
+      {/* Floating X mark — top left */}
+      <div className="absolute top-48 left-14">
+        <PixelIcon name="x" size={10} opacity={0.06} />
+      </div>
 
-      {/* ── Content ── */}
-      <div className="relative z-10 max-w-[640px] pt-24 pb-16">
-
-        {/* Eyebrow */}
-        <div className="hero-eyebrow flex items-center gap-3 mb-8">
-          <div className="w-6 h-px bg-orange flex-shrink-0" />
-          <span className="font-mono text-[10px] tracking-[3px] text-orange uppercase">
-            AI-Native Creative Studio
-          </span>
+      {/* Content */}
+      <div className="relative z-10 max-w-5xl">
+        <div
+          ref={eyebrowRef}
+          className="hero-eyebrow font-mono text-[10px] tracking-[3px] text-orange uppercase mb-6"
+        >
+          Creative Studio · Brand · Culture · Emerging Tech
         </div>
 
-        {/* Headline */}
-        <h1
-          className="font-headline font-bold leading-[0.95] tracking-tightest mb-8"
-          style={{ fontSize: 'clamp(42px, 6.5vw, 88px)' }}
-        >
-          <span className="hero-line-1 block text-[#12120f]">Launch faster.</span>
-          <span className="hero-line-2 block text-[#12120f]">Create smarter.</span>
-          <span className="hero-line-2 block text-orange">Operate leaner.</span>
+        <h1 className="font-headline font-bold leading-[0.95] tracking-tightest mb-8" style={{ fontSize: 'clamp(52px, 8vw, 100px)' }}>
+          <span ref={line1Ref} className="hero-line-1 block">
+            Launch faster.
+          </span>
+          <span ref={line2Ref} className="hero-line-2 block">
+            Create smarter.{' '}
+            <span className="text-orange">Operate leaner.</span>
+          </span>
         </h1>
 
-        {/* Subheadline */}
-        <p className="hero-sub text-[15px] text-[#666] leading-[1.8] max-w-[480px] mb-10">
+        <p
+          ref={subRef}
+          className="hero-sub text-base text-[#666] leading-[1.7] max-w-lg mb-10"
+        >
           HumanXMachine is an AI-native studio helping founders and brands build
           launch-ready identities, content systems, and business workflows.
         </p>
 
-        {/* CTAs */}
-        <div className="hero-actions flex flex-wrap gap-3 items-center">
-          <Button variant="primary" href="/contact">Start a Project</Button>
-          <Button variant="ghost" href="/work">View Work</Button>
-        </div>
-
-        {/* Stat strip */}
-        <div className="hero-hint flex gap-8 mt-12 pt-8 border-t border-[#E2E2DF]">
-          {[
-            { n: '2×', label: 'Founders' },
-            { n: 'AI', label: 'Powered' },
-            { n: '∞', label: 'Output' },
-          ].map(({ n, label }) => (
-            <div key={label}>
-              <p className="font-headline font-bold text-[#12120f] text-lg tracking-tighter">{n}</p>
-              <p className="font-mono text-[8px] tracking-[2px] text-[#999] uppercase mt-0.5">{label}</p>
-            </div>
-          ))}
+        <div ref={actionsRef} className="hero-actions flex gap-3 items-center">
+          <Button variant="primary" href="/contact">
+            Start a Project
+          </Button>
+          <Button variant="ghost" href="/work">
+            View Work
+          </Button>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-10 right-12 flex flex-col items-center gap-2">
-        <div
-          ref={lineRef}
-          className="w-px h-14 bg-gradient-to-b from-orange to-transparent opacity-0"
-          style={{ transformOrigin: 'top' }}
-        />
-        <span
-          className="font-mono text-[8px] tracking-[3px] text-[#bbb] uppercase"
-          style={{ writingMode: 'vertical-rl' }}
-        >
-          Scroll
+      {/* Scroll hint */}
+      <div
+        ref={hintRef}
+        className="hero-hint absolute bottom-8 left-10 flex items-center gap-3"
+      >
+        <div className="w-10 h-px bg-[#333]" />
+        <span className="font-mono text-[9px] tracking-[3px] text-[#333] uppercase">
+          Scroll to explore
         </span>
       </div>
     </section>

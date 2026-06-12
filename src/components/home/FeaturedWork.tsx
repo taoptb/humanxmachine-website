@@ -70,7 +70,7 @@ export function FeaturedWork({ projects }: FeaturedWorkProps) {
   }, [])
 
   return (
-    <section className="bg-[#F7F7F7] px-10 py-20 border-t border-[#E2E2DF]">
+    <section className="bg-white px-10 py-20">
       <div style={{ maxWidth: '1440px', margin: '0 auto' }}>
 
         <div ref={headerRef} className="flex justify-between items-end mb-12 opacity-0">
@@ -90,17 +90,17 @@ export function FeaturedWork({ projects }: FeaturedWorkProps) {
             <Link
               key={project.slug}
               href={`/work/${project.slug}`}
-              className="work-card group relative rounded overflow-hidden opacity-0 block bg-white border border-[#E2E2DF]"
+              className="work-card group relative rounded overflow-hidden opacity-0 block bg-[#f0efe9]"
               style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
             >
               {/* Thumbnail */}
               <div className="relative h-56 overflow-hidden">
                 {project.isVideo ? (
-                  <div className="w-full h-full bg-[#F0F0ED] flex flex-col items-center justify-center gap-2">
-                    <div className="w-14 h-14 rounded-full border border-[#D0CFC9] flex items-center justify-center text-[#bbb] text-lg group-hover:border-orange group-hover:text-orange transition-colors">
+                  <div className="w-full h-full bg-dark-surface flex flex-col items-center justify-center gap-2">
+                    <div className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-white/30 text-lg group-hover:border-orange group-hover:text-orange transition-colors">
                       ▶
                     </div>
-                    <span className="font-mono text-[8px] tracking-[3px] text-[#ccc] uppercase">
+                    <span className="font-mono text-[8px] tracking-[3px] text-[#333] uppercase">
                       Video · Motion
                     </span>
                   </div>

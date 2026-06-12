@@ -15,15 +15,15 @@ export function WorkCard({ project, index, className = '', imageHeight = 300 }: 
   return (
     <Link
       href={`/work/${project.slug}`}
-      className={`group relative bg-[#EEEEED] rounded overflow-hidden block ${className}`}
+      className={`group relative bg-dark-surface rounded overflow-hidden block ${className}`}
     >
       <div className="relative overflow-hidden" style={{ height: imageHeight }}>
         {project.isVideo ? (
-          <div className="w-full h-full bg-[#E8E8E4] flex flex-col items-center justify-center gap-2">
-            <div className="w-14 h-14 rounded-full border border-[#D0CFC9] flex items-center justify-center text-[#aaa] text-lg group-hover:border-orange group-hover:text-orange transition-colors duration-300">
+          <div className="w-full h-full bg-[#1a1a17] flex flex-col items-center justify-center gap-2">
+            <div className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-white/30 text-lg group-hover:border-orange group-hover:text-orange transition-colors duration-300">
               ▶
             </div>
-            <span className="font-mono text-[8px] tracking-[3px] text-[#bbb] uppercase">Video · Motion</span>
+            <span className="font-mono text-[8px] tracking-[3px] text-[#333] uppercase">Video · Motion</span>
           </div>
         ) : project.coverUrl ? (
           <Image
@@ -33,7 +33,7 @@ export function WorkCard({ project, index, className = '', imageHeight = 300 }: 
             className="object-cover object-top group-hover:scale-[1.04] transition-transform duration-700"
           />
         ) : (
-          <div className="w-full h-full bg-[#E2E2DF]" />
+          <div className="w-full h-full bg-dark-border" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-60 group-hover:opacity-85 transition-opacity duration-300" />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

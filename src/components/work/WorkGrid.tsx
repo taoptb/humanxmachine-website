@@ -29,7 +29,7 @@ export function WorkGrid({ projects }: WorkGridProps) {
             className={`font-mono text-[9px] tracking-[2px] uppercase px-[14px] py-[7px] rounded-[2px] transition-colors ${
               active === f
                 ? 'bg-orange text-white'
-                : 'border border-[#D0CFC9] text-[#888] hover:border-[#aaa] hover:text-[#555]'
+                : 'border border-dark-border text-[#555] hover:border-[#555] hover:text-[#aaa]'
             }`}
           >
             {f}
@@ -62,14 +62,14 @@ export function WorkGrid({ projects }: WorkGridProps) {
         })}
 
         {/* Coming soon card */}
-        <div className="col-span-12 md:col-span-4 bg-white border border-[#E2E2DF] rounded flex flex-col items-center justify-center gap-3 min-h-[240px]">
-          <div className="opacity-20 text-orange font-mono text-4xl">×</div>
-          <span className="font-mono text-[9px] tracking-[3px] text-[#bbb] uppercase">Next Project</span>
-          <span className="font-mono text-[8px] tracking-[1px] text-[#ccc] uppercase">In production</span>
+        <div className="col-span-12 md:col-span-4 bg-[#111110] border border-[#1f1f1c] rounded flex flex-col items-center justify-center gap-3 min-h-[240px]">
+          <div className="opacity-10 text-orange font-mono text-4xl">×</div>
+          <span className="font-mono text-[9px] tracking-[3px] text-[#333] uppercase">Next Project</span>
+          <span className="font-mono text-[8px] tracking-[1px] text-[#222] uppercase">In production</span>
         </div>
       </div>
 
-      <p className="mt-6 font-mono text-[10px] tracking-[2px] text-[#aaa]">
+      <p className="mt-6 font-mono text-[10px] tracking-[2px] text-[#444]">
         Showing {filtered.length} project{filtered.length !== 1 ? 's' : ''}
       </p>
     </div>

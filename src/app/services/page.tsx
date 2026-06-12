@@ -61,20 +61,20 @@ const PRODUCTION_IMG = 'https://d8j0ntlcm91z4.cloudfront.net/user_30lCjEHvkkiAR5
 
 export default function ServicesPage() {
   return (
-    <main className="bg-[#F7F7F7] min-h-screen pt-16">
+    <main className="bg-black min-h-screen pt-16">
 
       {/* Page Hero */}
-      <section className="px-6 md:px-16 pt-20 pb-16 border-b border-[#E2E2DF] relative overflow-hidden">
+      <section className="px-6 md:px-16 pt-20 pb-16 border-b border-dark-border relative overflow-hidden">
         <div className="max-w-4xl">
           <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-6">What We Do</p>
           <h1
-            className="font-headline font-bold tracking-tightest text-[#12120f] leading-none mb-6"
+            className="font-headline font-bold tracking-tightest text-white leading-none mb-6"
             style={{ fontSize: 'clamp(40px, 6vw, 80px)' }}
           >
             Two pillars.<br />
             <span className="text-orange">One studio.</span>
           </h1>
-          <p className="text-[15px] text-[#888] leading-relaxed max-w-lg">
+          <p className="text-[15px] text-[#555] leading-relaxed max-w-lg">
             Everything we do falls under Business Creation or Creative Production.
             Most of our clients need both — because a brand without content is invisible,
             and content without strategy is noise.
@@ -86,7 +86,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Pillar 01 — Business Creation */}
-      <section className="border-b border-[#E2E2DF]">
+      <section className="border-b border-dark-border">
         {/* Image banner */}
         <div className="w-full h-[300px] md:h-[420px] overflow-hidden relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -109,12 +109,12 @@ export default function ServicesPage() {
             {/* Left: intro */}
             <div>
               <h2
-                className="font-headline font-bold tracking-tightest text-[#12120f] leading-none mb-6"
+                className="font-headline font-bold tracking-tightest text-white leading-none mb-6"
                 style={{ fontSize: 'clamp(32px, 4vw, 56px)' }}
               >
                 Business<br />Creation
               </h2>
-              <p className="text-[15px] text-[#888] leading-relaxed mb-8">
+              <p className="text-[15px] text-[#555] leading-relaxed mb-8">
                 From zero to brand. We build the identity, strategy, and systems founders need
                 to launch with confidence — and the infrastructure to scale with clarity.
               </p>
@@ -124,14 +124,14 @@ export default function ServicesPage() {
             {/* Right: services */}
             <div className="space-y-0">
               {PILLAR_ONE_SERVICES.map((s, i) => (
-                <div key={s.name} className={`py-8 ${i < PILLAR_ONE_SERVICES.length - 1 ? 'border-b border-[#E2E2DF]' : ''}`}>
+                <div key={s.name} className={`py-8 ${i < PILLAR_ONE_SERVICES.length - 1 ? 'border-b border-dark-border' : ''}`}>
                   <div className="flex items-start justify-between gap-4 mb-3">
-                    <h3 className="font-headline font-bold text-[#12120f] text-xl tracking-tight">{s.name}</h3>
+                    <h3 className="font-headline font-bold text-white text-xl tracking-tight">{s.name}</h3>
                     <span className="font-mono text-[8px] tracking-[2px] text-orange uppercase border border-orange/30 px-2 py-1 flex-shrink-0">
                       {s.tag}
                     </span>
                   </div>
-                  <p className="text-[14px] text-[#888] leading-relaxed">{s.desc}</p>
+                  <p className="text-[14px] text-[#555] leading-relaxed">{s.desc}</p>
                 </div>
               ))}
             </div>
@@ -140,7 +140,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Pillar 02 — Creative Production */}
-      <section className="bg-white border-t border-[#E2E2DF]">
+      <section className="bg-white">
         {/* Image banner */}
         <div className="w-full h-[300px] md:h-[420px] overflow-hidden relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}

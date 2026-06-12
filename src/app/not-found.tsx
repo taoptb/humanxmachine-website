@@ -4,9 +4,9 @@ import { PixelIcon } from '@/components/ui/PixelIcon'
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-[#F7F7F7] flex flex-col items-center justify-center px-6 text-center">
+    <main className="min-h-screen bg-black flex flex-col items-center justify-center px-6 text-center">
 
-      <div className="opacity-10 mb-10">
+      <div className="opacity-20 mb-10">
         <PixelIcon name="x" size={16} />
       </div>
 
@@ -15,20 +15,20 @@ export default function NotFound() {
       </p>
 
       <h1
-        className="font-headline font-bold leading-none tracking-tightest mb-6"
+        className="font-headline font-bold text-white leading-none tracking-tightest mb-6"
         style={{
           fontSize: 'clamp(80px, 18vw, 200px)',
-          color: '#EEEEED',
-          WebkitTextStroke: '1px #D0CFC9',
+          color: '#1a1a17',
+          WebkitTextStroke: '1px #2a2a27',
         }}
       >
         404
       </h1>
 
-      <h2 className="font-headline font-bold text-[#12120f] text-2xl tracking-tight mb-4">
+      <h2 className="font-headline font-bold text-white text-2xl tracking-tight mb-4">
         This page doesn&apos;t exist.
       </h2>
-      <p className="text-[14px] text-[#999] mb-10 max-w-sm">
+      <p className="text-[14px] text-[#444] mb-10 max-w-sm">
         The link might be broken, or the page may have moved.
       </p>
 

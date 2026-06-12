@@ -42,19 +42,19 @@ export default async function CaseStudyPage({
   const next = allProjects[currentIndex + 1] ?? null
 
   return (
-    <main className="bg-[#F7F7F7] min-h-screen">
+    <main className="bg-black min-h-screen">
       {/* Hero */}
       <section className="relative overflow-hidden" style={{ height: '70vh', minHeight: '480px' }}>
         {project.isVideo ? (
-          <div className="w-full h-full bg-[#E8E8E5] flex items-center justify-center">
+          <div className="w-full h-full bg-[#1a1a17] flex items-center justify-center">
             <div className="w-20 h-20 rounded-full border border-orange/30 flex items-center justify-center text-orange/60 text-3xl">▶</div>
           </div>
         ) : project.coverUrl ? (
           <Image src={project.coverUrl} alt={project.title} fill className="object-cover object-top" priority />
         ) : (
-          <div className="w-full h-full bg-[#EEEEED]" />
+          <div className="w-full h-full bg-dark-surface" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 px-6 md:px-10 pb-10">
           <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-3">{project.category}</p>
           <h1 className="font-headline font-bold tracking-tightest text-white leading-none" style={{ fontSize: 'clamp(32px, 5vw, 72px)' }}>
@@ -66,24 +66,24 @@ export default async function CaseStudyPage({
       {/* Body */}
       <section className="px-6 md:px-10 py-20 max-w-3xl mx-auto">
         {project.description && (
-          <p className="text-lg text-[#666] leading-relaxed mb-16">{project.description}</p>
+          <p className="text-lg text-[#888] leading-relaxed mb-16">{project.description}</p>
         )}
         {project.brief && (
           <div className="mb-12">
             <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-4">Brief</p>
-            <p className="text-base text-[#777] leading-relaxed">{project.brief}</p>
+            <p className="text-base text-[#aaa] leading-relaxed">{project.brief}</p>
           </div>
         )}
         {project.challenge && (
           <div className="mb-12">
             <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-4">Challenge</p>
-            <p className="text-base text-[#777] leading-relaxed">{project.challenge}</p>
+            <p className="text-base text-[#aaa] leading-relaxed">{project.challenge}</p>
           </div>
         )}
         {project.output && (
           <div className="mb-12">
             <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-4">Output</p>
-            <p className="text-base text-[#777] leading-relaxed">{project.output}</p>
+            <p className="text-base text-[#aaa] leading-relaxed">{project.output}</p>
           </div>
         )}
         {project.mediaUrls && project.mediaUrls.length > 0 && (
@@ -98,17 +98,17 @@ export default async function CaseStudyPage({
       </section>
 
       {/* Prev / Next */}
-      <div className="border-t border-[#E2E2DF] grid grid-cols-2">
+      <div className="border-t border-dark-border grid grid-cols-2">
         {prev ? (
-          <Link href={`/work/${prev.slug}`} className="px-10 py-8 border-r border-[#E2E2DF] hover:bg-white transition-colors group">
-            <p className="font-mono text-[9px] tracking-[2px] text-[#bbb] uppercase mb-2">← Previous</p>
-            <p className="font-headline font-bold text-[#12120f] text-lg tracking-tight group-hover:text-orange transition-colors">{prev.title}</p>
+          <Link href={`/work/${prev.slug}`} className="px-10 py-8 border-r border-dark-border hover:bg-dark-surface transition-colors group">
+            <p className="font-mono text-[9px] tracking-[2px] text-[#444] uppercase mb-2">← Previous</p>
+            <p className="font-headline font-bold text-white text-lg tracking-tight group-hover:text-orange transition-colors">{prev.title}</p>
           </Link>
         ) : <div />}
         {next ? (
-          <Link href={`/work/${next.slug}`} className="px-10 py-8 text-right hover:bg-white transition-colors group">
-            <p className="font-mono text-[9px] tracking-[2px] text-[#bbb] uppercase mb-2">Next →</p>
-            <p className="font-headline font-bold text-[#12120f] text-lg tracking-tight group-hover:text-orange transition-colors">{next.title}</p>
+          <Link href={`/work/${next.slug}`} className="px-10 py-8 text-right hover:bg-dark-surface transition-colors group">
+            <p className="font-mono text-[9px] tracking-[2px] text-[#444] uppercase mb-2">Next →</p>
+            <p className="font-headline font-bold text-white text-lg tracking-tight group-hover:text-orange transition-colors">{next.title}</p>
           </Link>
         ) : <div />}
       </div>
