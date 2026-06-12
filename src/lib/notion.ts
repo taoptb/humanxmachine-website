@@ -76,6 +76,14 @@ export async function getFeaturedWork(): Promise<WorkProject[]> {
 
 // ─── Insights ──────────────────────────────────────────────
 
+function toSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
 export async function getInsights(): Promise<Insight[]> {
   if (!hasCredentials() || !process.env.NOTION_INSIGHTS_DB || process.env.NOTION_INSIGHTS_DB === 'placeholder_not_set') return []
   try {
@@ -85,15 +93,20 @@ export async function getInsights(): Promise<Insight[]> {
       sorts: [{ property: 'Date', direction: 'descending' }],
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return res.results.map((page: any) => ({
-      id: page.id,
-      slug: getText(page.properties.Slug),
-      title: getText(page.properties.Title),
-      excerpt: getText(page.properties.Excerpt),
-      tag: (getText(page.properties.Tag) as any) ?? [], // eslint-disable-line @typescript-eslint/no-explicit-any
-      coverUrl: getFileUrl(page.properties.Cover),
-      date: getText(page.properties.Date),
-    }))
+    return res.results.map((page: any) => {
+      const title = getText(page.properties.Title)
+      const rawSlug = getText(page.properties.Slug)
+      const slug = rawSlug ? toSlug(rawSlug) : toSlug(title)
+      return {
+        id: page.id,
+        slug,
+        title,
+        excerpt: getText(page.properties.Excerpt),
+        tag: (getText(page.properties.Tag) as any) ?? [], // eslint-disable-line @typescript-eslint/no-explicit-any
+        coverUrl: getFileUrl(page.properties.Cover),
+        date: getText(page.properties.Date),
+      }
+    })
   } catch {
     return []
   }

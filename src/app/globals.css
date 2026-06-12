@@ -71,16 +71,16 @@
 
 /* ── Hero entrance — pure CSS keyframes, immune to Strict Mode / HMR ── */
 @keyframes hero-reveal {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: none; }
 }
-/* animation-fill-mode: both = start from "from" state, stay at "to" state */
-.hero-eyebrow { animation: hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s  both; }
-.hero-line-1  { animation: hero-reveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.42s both; }
-.hero-line-2  { animation: hero-reveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.56s both; }
-.hero-sub     { animation: hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 0.9s  both; }
-.hero-actions { animation: hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 1.1s  both; }
-.hero-hint    { animation: hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 1.35s both; }
+/* animation-fill-mode: both = hold "from" before delay, stay at "to" after */
+.hero-eyebrow { animation: hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 0.35s both; }
+.hero-line-1  { animation: hero-reveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.50s both; }
+.hero-line-2  { animation: hero-reveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.65s both; }
+.hero-sub     { animation: hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 0.95s both; }
+.hero-actions { animation: hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 1.15s both; }
+.hero-hint    { animation: hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 1.40s both; }
 
 /* Custom cursor expanded state */
 #custom-cursor.expanded {
