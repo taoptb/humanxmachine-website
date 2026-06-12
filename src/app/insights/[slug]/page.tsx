@@ -26,6 +26,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
+function toYouTubeEmbed(url: string): string | null {
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/)
+  return match ? `https://www.youtube.com/embed/${match[1]}` : null
+}
+
+function toVimeoEmbed(url: string): string | null {
+  const match = url.match(/vimeo\.com\/(\d+)/)
+  return match ? `https://player.vimeo.com/video/${match[1]}` : null
+}
+
 function renderBlock(block: any): React.ReactNode { // eslint-disable-line @typescript-eslint/no-explicit-any
   const { type, id } = block
   const value = block[type]
@@ -36,6 +46,7 @@ function renderBlock(block: any): React.ReactNode { // eslint-disable-line @type
       if (t.annotations?.bold) content = <strong key={i}>{content}</strong>
       if (t.annotations?.italic) content = <em key={i}>{content}</em>
       if (t.annotations?.code) content = <code key={i} className="bg-dark-surface px-1.5 py-0.5 rounded text-orange text-sm font-mono">{content}</code>
+      if (t.href) content = <a key={i} href={t.href} target="_blank" rel="noopener noreferrer" className="text-orange underline underline-offset-2 hover:text-orange/70 transition-colors">{content}</a>
       return content
     }) ?? null
 
@@ -49,12 +60,83 @@ function renderBlock(block: any): React.ReactNode { // eslint-disable-line @type
     case 'heading_3':
       return <h4 key={id} className="font-headline font-bold text-xl tracking-tight text-white mt-8 mb-2">{richText(value.rich_text)}</h4>
     case 'bulleted_list_item':
-      return <li key={id} className="text-[15px] text-[#999] leading-relaxed mb-2 ml-4">{richText(value.rich_text)}</li>
+      return <li key={id} className="text-[15px] text-[#999] leading-relaxed mb-2 ml-4 list-disc">{richText(value.rich_text)}</li>
+    case 'numbered_list_item':
+      return <li key={id} className="text-[15px] text-[#999] leading-relaxed mb-2 ml-4 list-decimal">{richText(value.rich_text)}</li>
     case 'quote':
       return <blockquote key={id} className="border-l-2 border-orange pl-5 my-6 text-[15px] text-[#777] italic leading-relaxed">{richText(value.rich_text)}</blockquote>
+    case 'divider':
+      return <hr key={id} className="border-dark-border my-10" />
+    case 'code':
+      return (
+        <pre key={id} className="bg-dark-surface border border-dark-border rounded p-5 my-6 overflow-x-auto">
+          <code className="text-[13px] text-orange font-mono leading-relaxed">{value.rich_text?.[0]?.plain_text ?? ''}</code>
+        </pre>
+      )
     case 'image': {
       const src = value.type === 'external' ? value.external.url : value.file.url
-      return <div key={id} className="my-8 rounded overflow-hidden"><Image src={src} alt="" width={800} height={500} className="w-full object-cover" /></div>
+      const caption = value.caption?.[0]?.plain_text
+      return (
+        <figure key={id} className="my-8">
+          <div className="rounded overflow-hidden">
+            <Image src={src} alt={caption ?? ''} width={800} height={500} className="w-full object-cover" />
+          </div>
+          {caption && <figcaption className="text-center text-[12px] text-[#555] mt-3 font-mono tracking-wide">{caption}</figcaption>}
+        </figure>
+      )
+    }
+    case 'video': {
+      const url = value.type === 'external' ? value.external.url : value.file?.url ?? ''
+      const youtubeEmbed = toYouTubeEmbed(url)
+      const vimeoEmbed = toVimeoEmbed(url)
+      const embedSrc = youtubeEmbed ?? vimeoEmbed
+      if (embedSrc) {
+        return (
+          <div key={id} className="my-8 aspect-video rounded overflow-hidden">
+            <iframe src={embedSrc} className="w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+          </div>
+        )
+      }
+      return <video key={id} src={url} controls className="w-full rounded my-8" />
+    }
+    case 'embed': {
+      const url = value.url ?? ''
+      const youtubeEmbed = toYouTubeEmbed(url)
+      const vimeoEmbed = toVimeoEmbed(url)
+      const embedSrc = youtubeEmbed ?? vimeoEmbed
+      if (embedSrc) {
+        return (
+          <div key={id} className="my-8 aspect-video rounded overflow-hidden">
+            <iframe src={embedSrc} className="w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+          </div>
+        )
+      }
+      return (
+        <div key={id} className="my-6 border border-dark-border rounded p-4 text-[13px] text-[#555]">
+          <a href={url} target="_blank" rel="noopener noreferrer" className="text-orange underline break-all">{url}</a>
+        </div>
+      )
+    }
+    case 'bookmark': {
+      const url = value.url ?? ''
+      const caption = value.caption?.[0]?.plain_text
+      return (
+        <a
+          key={id}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-4 border border-dark-border rounded p-4 my-6 hover:border-orange/40 transition-colors group"
+        >
+          <div className="min-w-0 flex-1">
+            <p className="text-[13px] text-white font-medium truncate group-hover:text-orange transition-colors">
+              {caption || url}
+            </p>
+            <p className="text-[11px] text-[#555] truncate mt-0.5">{url}</p>
+          </div>
+          <span className="text-[#555] text-lg flex-shrink-0">→</span>
+        </a>
+      )
     }
     default:
       return null
