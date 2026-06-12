@@ -28,7 +28,7 @@ export function Nav() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-10 transition-all duration-300 ${
           scrolled || open
-            ? 'bg-black/95 backdrop-blur-md border-b border-dark-border'
+            ? 'bg-white/95 backdrop-blur-md border-b border-[#E2E2DF]'
             : 'bg-transparent'
         }`}
       >
@@ -39,7 +39,7 @@ export function Nav() {
             width={140}
             height={32}
             priority
-            className="h-8 w-auto brightness-0 invert"
+            className="h-8 w-auto brightness-0"
           />
         </Link>
 
@@ -49,7 +49,7 @@ export function Nav() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-mono text-[11px] tracking-[2px] uppercase text-[#666] hover:text-white transition-colors"
+              className="font-mono text-[11px] tracking-[2px] uppercase text-[#888] hover:text-[#12120f] transition-colors"
             >
               {link.label}
             </Link>
@@ -64,9 +64,9 @@ export function Nav() {
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
           >
-            <span className={`block w-5 h-px bg-white transition-transform duration-300 ${open ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-5 h-px bg-white transition-opacity duration-300 ${open ? 'opacity-0' : ''}`} />
-            <span className={`block w-5 h-px bg-white transition-transform duration-300 ${open ? '-rotate-45 -translate-y-2' : ''}`} />
+            <span className={`block w-5 h-px bg-[#12120f] transition-transform duration-300 ${open ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`block w-5 h-px bg-[#12120f] transition-opacity duration-300 ${open ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-px bg-[#12120f] transition-transform duration-300 ${open ? '-rotate-45 -translate-y-2' : ''}`} />
           </button>
         </div>
       </nav>

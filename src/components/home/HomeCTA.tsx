@@ -29,9 +29,9 @@ export function HomeCTA() {
   return (
     <section
       ref={sectionRef}
-      className="bg-black border-t border-dark-border px-6 md:px-10 py-16 md:py-28 text-center"
+      className="bg-[#12120f] border-t border-[#2a2a27] px-6 md:px-10 py-16 md:py-28 text-center"
     >
-      <p className="cta-el font-mono text-[9px] tracking-[3px] text-[#444] uppercase mb-6 opacity-0">
+      <p className="cta-el font-mono text-[9px] tracking-[3px] text-orange uppercase mb-6 opacity-0">
         Start the conversation
       </p>
       <h2
@@ -41,7 +41,7 @@ export function HomeCTA() {
         Got something worth<br />
         building? <span className="text-orange">Let&apos;s build it.</span>
       </h2>
-      <p className="cta-el text-[15px] text-[#555] max-w-md mx-auto mb-12 opacity-0">
+      <p className="cta-el text-[15px] text-[#666] max-w-md mx-auto mb-12 opacity-0">
         No pitch decks. No big agency overhead. Just two founders and the tools to make your idea real.
       </p>
       <div className="cta-el opacity-0">

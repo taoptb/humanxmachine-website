@@ -97,19 +97,19 @@ export default function AboutPage() {
     <main>
 
       {/* Section 01: Hero */}
-      <section className="relative min-h-[70vh] bg-black flex flex-col justify-end px-6 md:px-10 pb-20 pt-32 overflow-hidden">
+      <section className="relative min-h-[70vh] bg-[#F7F7F7] flex flex-col justify-end px-6 md:px-10 pb-20 pt-32 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: `linear-gradient(rgba(255,77,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,77,0,0.03) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(18,18,15,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(18,18,15,0.04) 1px, transparent 1px)`,
           backgroundSize: '60px 60px',
         }} />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F7F7F7] to-transparent pointer-events-none" />
 
         <div className="relative z-10" style={{ maxWidth: '1440px', margin: '0 auto', width: '100%' }}>
           <p className="font-mono text-[10px] tracking-[3px] text-orange uppercase mb-6">
             01 — Who We Are
           </p>
           <h1
-            className="font-headline font-bold leading-[0.95] tracking-tightest text-white mb-8 overflow-hidden"
+            className="font-headline font-bold leading-[0.95] tracking-tightest text-[#12120f] mb-8 overflow-hidden"
             style={{ fontSize: 'clamp(36px, 5.5vw, 72px)' }}
           >
             <span ref={heroHeadlineRef} className="block">
@@ -119,7 +119,7 @@ export default function AboutPage() {
           </h1>
           <p
             ref={heroSubRef}
-            className="text-[15px] text-[#666] leading-[1.7] max-w-lg opacity-0"
+            className="text-[15px] text-[#888] leading-[1.7] max-w-lg opacity-0"
           >
             Two experienced founders who believe the rules have changed.
             You don&apos;t need a big team or large capital to build something
@@ -130,51 +130,51 @@ export default function AboutPage() {
       </section>
 
       {/* Section 02: Founders */}
-      <section ref={foundersRef} className="border-t border-dark-border">
+      <section ref={foundersRef} className="border-t border-[#E2E2DF]">
         <div className="grid grid-cols-1 md:grid-cols-2">
           {[
-            { label: 'Founder 01', data: FOUNDER_ONE, borderClass: 'border-b md:border-b-0 md:border-r border-dark-border' },
+            { label: 'Founder 01', data: FOUNDER_ONE, borderClass: 'border-b md:border-b-0 md:border-r border-[#E2E2DF]' },
             { label: 'Founder 02', data: FOUNDER_TWO, borderClass: '' },
           ].map(({ label, data, borderClass }) => (
-            <div key={label} className={`founder-card bg-dark-surface ${borderClass} px-6 md:px-12 py-16 opacity-0`}>
+            <div key={label} className={`founder-card bg-white ${borderClass} px-6 md:px-12 py-16 opacity-0`}>
               <p className="font-mono text-[9px] tracking-[3px] text-orange uppercase mb-8">{label}</p>
               <div className="mb-6">
                 {data.imageUrl ? (
                   <img
                     src={data.imageUrl}
                     alt={data.name}
-                    className="w-24 h-24 object-cover rounded-sm border border-dark-border"
+                    className="w-24 h-24 object-cover rounded-sm border border-[#E2E2DF]"
                   />
                 ) : (
-                  <div className="w-16 h-16 rounded-sm bg-dark-surface border border-dark-border flex items-center justify-center font-headline font-bold text-orange text-2xl">
+                  <div className="w-16 h-16 rounded-sm bg-[#F0F0ED] border border-[#E2E2DF] flex items-center justify-center font-headline font-bold text-orange text-2xl">
                     {data.initials}
                   </div>
                 )}
               </div>
-              <h2 className="font-headline font-bold text-white text-2xl tracking-tight mb-1">{data.name}</h2>
-              <p className="font-mono text-[9px] tracking-[2px] text-[#444] uppercase mb-6">{data.role}</p>
-              <p className="text-[14px] text-[#555] leading-[1.75]">{data.bio}</p>
+              <h2 className="font-headline font-bold text-[#12120f] text-2xl tracking-tight mb-1">{data.name}</h2>
+              <p className="font-mono text-[9px] tracking-[2px] text-[#aaa] uppercase mb-6">{data.role}</p>
+              <p className="text-[14px] text-[#777] leading-[1.75]">{data.bio}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Section 03: Philosophy */}
-      <section ref={philRef} className="bg-black border-t border-dark-border px-6 md:px-10 py-20 md:py-28">
+      <section ref={philRef} className="bg-[#F7F7F7] border-t border-[#E2E2DF] px-6 md:px-10 py-20 md:py-28">
         <div style={{ maxWidth: '1440px', margin: '0 auto' }}>
-          <p className="phil-el font-mono text-[9px] tracking-[3px] text-[#444] uppercase mb-12 opacity-0">
+          <p className="phil-el font-mono text-[9px] tracking-[3px] text-[#bbb] uppercase mb-12 opacity-0">
             02 — Our Belief
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
             <h2
-              className="phil-el font-headline font-bold tracking-tighter text-white leading-[1.05] opacity-0"
+              className="phil-el font-headline font-bold tracking-tighter text-[#12120f] leading-[1.05] opacity-0"
               style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}
             >
               AI doesn&apos;t replace you.<br />
               It <span className="text-orange">completes you.</span>
             </h2>
             <div>
-              <p className="phil-el text-[14px] text-[#555] leading-[1.8] mb-8 opacity-0">
+              <p className="phil-el text-[14px] text-[#888] leading-[1.8] mb-8 opacity-0">
                 Every founder has gaps — skills they don&apos;t have, capacity they
                 can&apos;t afford to hire. AI fills those gaps. It&apos;s a creative director,
                 a copywriter, a developer, a researcher, and a strategist —
@@ -188,7 +188,7 @@ export default function AboutPage() {
                 ].map((belief, i) => (
                   <li key={i} className="phil-el flex gap-4 items-start opacity-0">
                     <span className="w-1.5 h-1.5 rounded-full bg-orange mt-2 flex-shrink-0" />
-                    <p className="text-[13px] text-[#555] leading-[1.7]">{belief}</p>
+                    <p className="text-[13px] text-[#888] leading-[1.7]">{belief}</p>
                   </li>
                 ))}
               </ul>
@@ -212,19 +212,19 @@ export default function AboutPage() {
       </section>
 
       {/* Section 05: CTA */}
-      <section className="bg-black border-t border-dark-border px-6 md:px-10 py-20">
+      <section className="bg-white border-t border-[#E2E2DF] px-6 md:px-10 py-20">
         <div
           className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
           style={{ maxWidth: '1440px', margin: '0 auto' }}
         >
           <div>
             <h2
-              className="font-headline font-bold text-white tracking-tighter mb-3"
+              className="font-headline font-bold text-[#12120f] tracking-tighter mb-3"
               style={{ fontSize: 'clamp(24px, 3vw, 40px)' }}
             >
               Ready to build something<br />at the edge?
             </h2>
-            <p className="text-[14px] text-[#555]">Let&apos;s talk about what you&apos;re working on.</p>
+            <p className="text-[14px] text-[#888]">Let&apos;s talk about what you&apos;re working on.</p>
           </div>
           <Button variant="primary" href="/contact">Start a Project →</Button>
         </div>

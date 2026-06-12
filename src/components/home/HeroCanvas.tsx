@@ -36,8 +36,8 @@ export function HeroCanvas() {
 
       // ── Scene ─────────────────────────────────────────────────
       const scene = new THREE.Scene()
-      // Fog colour matches brand background — far cubes dissolve naturally
-      scene.fog = new THREE.Fog(0x12120f, 20, 44)
+      // Fog colour matches soft-white background — far cubes dissolve naturally
+      scene.fog = new THREE.Fog(0xF7F7F7, 18, 42)
 
       // ── Camera — perspective, angled from above-front ──────────
       const camera = new THREE.PerspectiveCamera(54, W / H, 0.1, 100)
@@ -45,14 +45,19 @@ export function HeroCanvas() {
       camera.lookAt(0, 0, -2)
 
       // ── Lighting ──────────────────────────────────────────────
-      scene.add(new THREE.AmbientLight(0xffffff, 0.18))
+      scene.add(new THREE.AmbientLight(0xffffff, 0.55))
 
-      const sun = new THREE.DirectionalLight(0xffd4b0, 1.6)
+      const sun = new THREE.DirectionalLight(0xffffff, 1.2)
       sun.position.set(7, 14, 8)
       scene.add(sun)
 
+      // Subtle fill from the other side
+      const fill = new THREE.DirectionalLight(0xfff0e8, 0.4)
+      fill.position.set(-6, 8, 4)
+      scene.add(fill)
+
       // Orange point light that follows the mouse
-      const mousePL = new THREE.PointLight(0xff4d00, 6.0, 10)
+      const mousePL = new THREE.PointLight(0xff4d00, 4.0, 9)
       mousePL.position.set(0, 4, 0)
       scene.add(mousePL)
 
@@ -72,7 +77,7 @@ export function HeroCanvas() {
       const isOrange = new Uint8Array(count)
       const phase    = new Float32Array(count)
       const dummy    = new THREE.Object3D()
-      const darkCol  = new THREE.Color(0x232320)
+      const darkCol  = new THREE.Color(0x3a3a36)  // dark enough to read on #F7F7F7
       const orgCol   = new THREE.Color(0xff4d00)
 
       for (let i = 0; i < count; i++) {

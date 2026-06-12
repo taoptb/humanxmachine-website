@@ -7,8 +7,8 @@
   --color-orange: #ff4d00;
   --color-black: #12120f;
   --color-white: #fffefd;
-  --color-dark-surface: #1a1a17;
-  --color-dark-border: #2a2a27;
+  --color-dark-surface: #EEEEED;
+  --color-dark-border: #E2E2DF;
 
   /* Font families (CSS vars set by next/font in layout.tsx) */
   --font-headline: var(--font-space-grotesk), sans-serif;
@@ -33,12 +33,12 @@
 
   html {
     scroll-behavior: smooth;
-    background-color: #12120f;
+    background-color: #F7F7F7;
   }
 
   body {
-    background-color: #12120f;
-    color: #fffefd;
+    background-color: #F7F7F7;
+    color: #12120f;
     font-family: var(--font-dm-sans), sans-serif;
     overflow-x: hidden;
   }
@@ -56,8 +56,8 @@
 
   /* Custom scrollbar */
   ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #12120f; }
-  ::-webkit-scrollbar-thumb { background: #2a2a27; border-radius: 2px; }
+  ::-webkit-scrollbar-track { background: #F7F7F7; }
+  ::-webkit-scrollbar-thumb { background: #d0cfc9; border-radius: 2px; }
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
