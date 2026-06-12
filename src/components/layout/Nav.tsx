@@ -34,12 +34,12 @@ export function Nav() {
       >
         <Link href="/" onClick={() => setOpen(false)}>
           <Image
-            src="/logo/logo-symbol.svg"
+            src="/logo/logo-wordmark.svg"
             alt="HumanxMachine"
-            width={140}
-            height={32}
+            width={200}
+            height={36}
             priority
-            className="h-8 w-auto brightness-0"
+            className="h-5 w-auto"
           />
         </Link>
 
