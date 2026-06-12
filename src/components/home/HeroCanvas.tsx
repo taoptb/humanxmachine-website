@@ -2,63 +2,20 @@
 
 import { useEffect, useRef } from 'react'
 
-const CELL = 20        // px between pixel centers
-const PX   = 7         // rendered pixel square size
-const ORANGE_RATIO = 0.055  // fraction that start orange
+const COLS = 55
+const ROWS = 30
+const SPACING = 1.3
+const BAR_W = 0.98
+const COUNT = COLS * ROWS
 
-const vertexShader = /* glsl */`
-  attribute float aRandom;
-  attribute float aOrange;
-
-  uniform float uTime;
-  uniform vec2  uMouse;
-  uniform float uRadius;
-  uniform float uSize;
-
-  varying vec3  vColor;
-  varying float vAlpha;
-
-  void main() {
-    vec4 world = modelMatrix * vec4(position, 1.0);
-
-    // Distance from this pixel to mouse in world space
-    float dist = distance(world.xy, uMouse);
-    float proximity = 1.0 - smoothstep(0.0, uRadius, dist);
-
-    // Per-pixel idle pulse (different phase per pixel)
-    float pulse = sin(uTime * 0.7 + aRandom * 6.2831) * 0.5 + 0.5;
-
-    // Base alpha — orange pixels visible, dark pixels very subtle
-    float baseAlpha = aOrange > 0.5
-      ? 0.5 + pulse * 0.35
-      : 0.055 + pulse * 0.045;
-
-    // Near mouse: everything brightens toward orange
-    vAlpha = clamp(baseAlpha + proximity * (0.9 - baseAlpha), 0.0, 1.0);
-
-    // Base colour: orange or dark (#2a2a27)
-    vec3 darkCol   = vec3(0.165, 0.165, 0.153);
-    vec3 orangeCol = vec3(1.0, 0.302, 0.0);
-    vec3 baseCol   = aOrange > 0.5 ? orangeCol : darkCol;
-    vColor = mix(baseCol, orangeCol, proximity * 0.9);
-
-    gl_Position  = projectionMatrix * viewMatrix * world;
-    gl_PointSize = uSize;
-  }
-`
-
-const fragmentShader = /* glsl */`
-  varying vec3  vColor;
-  varying float vAlpha;
-
-  void main() {
-    // Square pixels: discard a small border to create the gap between cells
-    vec2 uv = gl_PointCoord;
-    float b = 0.08;
-    if (uv.x < b || uv.x > 1.0 - b || uv.y < b || uv.y > 1.0 - b) discard;
-    gl_FragColor = vec4(vColor, vAlpha);
-  }
-`
+// t=0 (valley) → teal, t=1 (peak) → orange
+const PALETTE: [number, number, number][] = [
+  [0x00, 0xD4, 0xAA], // #00D4AA teal
+  [0x3B, 0x82, 0xF6], // #3B82F6 blue
+  [0x8B, 0x5C, 0xF6], // #8B5CF6 violet
+  [0xFF, 0x2D, 0x6B], // #FF2D6B magenta
+  [0xFF, 0x4D, 0x00], // #FF4D00 orange (brand)
+]
 
 export function HeroCanvas() {
   const mountRef = useRef<HTMLDivElement>(null)
@@ -70,7 +27,6 @@ export function HeroCanvas() {
     let animId: number
     let disposed = false
 
-    // Lazy-load Three.js so it doesn't bloat SSR bundle
     import('three').then((THREE) => {
       if (disposed || !mount) return
 
@@ -78,104 +34,192 @@ export function HeroCanvas() {
       const H = mount.clientHeight
       const dpr = Math.min(window.devicePixelRatio, 2)
 
-      // ── Renderer ─────────────────────────────────────────
-      const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true })
+      // ── Renderer ──────────────────────────────────────────────
+      const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false })
       renderer.setPixelRatio(dpr)
       renderer.setSize(W, H)
-      renderer.setClearColor(0x000000, 0)
+      renderer.toneMapping = THREE.ACESFilmicToneMapping
+      renderer.toneMappingExposure = 1.1
       mount.appendChild(renderer.domElement)
 
-      // ── Scene + orthographic camera ───────────────────────
+      // ── Scene ─────────────────────────────────────────────────
       const scene = new THREE.Scene()
-      const camera = new THREE.OrthographicCamera(-W / 2, W / 2, H / 2, -H / 2, 0.1, 100)
-      camera.position.z = 10
+      scene.background = new THREE.Color(0x080706)
+      scene.fog = new THREE.FogExp2(0x080706, 0.022)
 
-      // ── Build pixel grid ──────────────────────────────────
-      const cols  = Math.ceil(W / CELL) + 1
-      const rows  = Math.ceil(H / CELL) + 1
-      const count = cols * rows
+      // ── Camera — angled from above-front ─────────────────────
+      const camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 180)
+      camera.position.set(0, 20, 26)
+      camera.lookAt(0, 0, -5)
 
-      const positions = new Float32Array(count * 3)
-      const randoms   = new Float32Array(count)
-      const oranges   = new Float32Array(count)
+      // ── Lighting ──────────────────────────────────────────────
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6))
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.4)
+      keyLight.position.set(12, 28, 18)
+      scene.add(keyLight)
+      const fillLight = new THREE.DirectionalLight(0xff6b35, 0.3)
+      fillLight.position.set(-12, 4, -8)
+      scene.add(fillLight)
 
-      for (let i = 0; i < count; i++) {
-        const col = i % cols
-        const row = Math.floor(i / cols)
-        positions[i * 3 + 0] = col * CELL - W / 2
-        positions[i * 3 + 1] = H / 2 - row * CELL
-        positions[i * 3 + 2] = 0
-        randoms[i] = Math.random()
-        oranges[i] = Math.random() < ORANGE_RATIO ? 1 : 0
+      // ── Bar mesh (single InstancedMesh for all bars) ──────────
+      const geo = new THREE.BoxGeometry(BAR_W, 1, BAR_W)
+      geo.translate(0, 0.5, 0) // pivot to bottom so scale extends upward
+
+      const mat = new THREE.MeshStandardMaterial({ roughness: 0.3, metalness: 0.2 })
+
+      const mesh = new THREE.InstancedMesh(geo, mat, COUNT)
+      mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
+      // Pre-allocate color buffer with dynamic usage hint
+      mesh.instanceColor = new THREE.InstancedBufferAttribute(
+        new Float32Array(COUNT * 3), 3
+      )
+      mesh.instanceColor.setUsage(THREE.DynamicDrawUsage)
+      scene.add(mesh)
+
+      // Precompute flat grid positions
+      const totalW = (COLS - 1) * SPACING
+      const totalD = (ROWS - 1) * SPACING
+      const gx = new Float32Array(COUNT)
+      const gz = new Float32Array(COUNT)
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const idx = r * COLS + c
+          gx[idx] = c * SPACING - totalW / 2
+          gz[idx] = r * SPACING - totalD / 2
+        }
       }
 
-      const geo = new THREE.BufferGeometry()
-      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-      geo.setAttribute('aRandom',  new THREE.BufferAttribute(randoms, 1))
-      geo.setAttribute('aOrange',  new THREE.BufferAttribute(oranges, 1))
+      // Reusable objects to avoid per-frame allocation
+      const dummy = new THREE.Object3D()
+      const col = new THREE.Color()
 
-      const mat = new THREE.ShaderMaterial({
-        vertexShader,
-        fragmentShader,
-        transparent: true,
-        depthWrite: false,
-        uniforms: {
-          uTime:   { value: 0 },
-          uMouse:  { value: new THREE.Vector2(-99999, -99999) },
-          uRadius: { value: 130 },
-          uSize:   { value: PX * dpr },
-        },
-      })
+      // ── Interaction state ─────────────────────────────────────
+      let mx = 99999, mz = 99999     // smoothed mouse world pos
+      let txm = 99999, tzm = 99999   // target from screen coords
 
-      const points = new THREE.Points(geo, mat)
-      scene.add(points)
-
-      // ── Mouse tracking ────────────────────────────────────
-      const target = new THREE.Vector2(-99999, -99999)
-      const current = new THREE.Vector2(-99999, -99999)
-
-      const onMouseMove = (e: MouseEvent) => {
+      // Approximate screen → world mapping onto y=0 plane
+      const toWorld = (cx: number, cy: number) => {
         const rect = mount.getBoundingClientRect()
-        target.set(
-          e.clientX - rect.left - W / 2,
-          -(e.clientY - rect.top  - H / 2)
-        )
+        const nx = (cx - rect.left) / rect.width * 2 - 1
+        const ny = -((cy - rect.top) / rect.height) * 2 + 1
+        txm = nx * (totalW / 2 + 10)
+        tzm = ny * -(totalD / 2 + 5) - 3
       }
-      window.addEventListener('mousemove', onMouseMove)
 
-      // ── Resize ────────────────────────────────────────────
+      const waves: { x: number; z: number; age: number }[] = []
+
+      const onMove = (e: MouseEvent) => toWorld(e.clientX, e.clientY)
+      const onClick = (e: MouseEvent) => {
+        toWorld(e.clientX, e.clientY)
+        waves.push({ x: txm, z: tzm, age: 0 })
+      }
+
+      window.addEventListener('mousemove', onMove)
+      mount.addEventListener('click', onClick)
+
+      // ── Resize ────────────────────────────────────────────────
       const onResize = () => {
         if (disposed) return
-        const nW = mount.clientWidth
-        const nH = mount.clientHeight
+        const nW = mount.clientWidth, nH = mount.clientHeight
         renderer.setSize(nW, nH)
-        camera.left   = -nW / 2
-        camera.right  =  nW / 2
-        camera.top    =  nH / 2
-        camera.bottom = -nH / 2
+        camera.aspect = nW / nH
         camera.updateProjectionMatrix()
       }
       window.addEventListener('resize', onResize)
 
-      // ── Animation loop ────────────────────────────────────
-      let t0 = performance.now()
-      const animate = () => {
-        animId = requestAnimationFrame(animate)
+      // ── Palette sample (mutates col) ──────────────────────────
+      const samplePalette = (t: number) => {
+        const c = Math.max(0, Math.min(1, t))
+        const s = (PALETTE.length - 1) * c
+        const i = Math.min(Math.floor(s), PALETTE.length - 2)
+        const f = s - i
+        const a = PALETTE[i], b = PALETTE[i + 1]
+        col.setRGB(
+          (a[0] + (b[0] - a[0]) * f) / 255,
+          (a[1] + (b[1] - a[1]) * f) / 255,
+          (a[2] + (b[2] - a[2]) * f) / 255
+        )
+      }
+
+      // ── Animation loop ────────────────────────────────────────
+      const t0 = performance.now()
+      let sway = 0
+
+      const tick = () => {
+        animId = requestAnimationFrame(tick)
         const elapsed = (performance.now() - t0) / 1000
-        mat.uniforms.uTime.value = elapsed
+
         // Smooth mouse follow
-        current.lerp(target, 0.06)
-        mat.uniforms.uMouse.value.copy(current)
+        mx += (txm - mx) * 0.055
+        mz += (tzm - mz) * 0.055
+
+        // Gentle camera sway
+        sway += 0.00015
+        camera.position.x = Math.sin(sway) * 2.8
+        camera.lookAt(0, 0, -5)
+
+        // Age and cull shockwaves
+        for (let i = waves.length - 1; i >= 0; i--) {
+          waves[i].age += 0.016
+          if (waves[i].age > 2.8) waves.splice(i, 1)
+        }
+
+        // Update every bar
+        for (let idx = 0; idx < COUNT; idx++) {
+          const x = gx[idx], z = gz[idx]
+
+          // Overlapping sine waves — organic wave field
+          let h =
+            Math.sin(x * 0.30 + elapsed * 1.0)  * 1.9
+            + Math.sin(z * 0.26 - elapsed * 0.78) * 1.6
+            + Math.sin((x + z) * 0.20 + elapsed * 0.55) * 1.1
+            + Math.sin(x * 0.50 - z * 0.35 + elapsed * 1.3) * 0.7
+
+          // Mouse ripple — proximity-weighted travelling wave
+          const ddx = x - mx, ddz = z - mz
+          const dist2 = ddx * ddx + ddz * ddz
+          if (dist2 < 225) { // within radius 15
+            const dist = Math.sqrt(dist2)
+            const prox = (1 - dist / 15) ** 2
+            h += prox * Math.sin(dist * 0.5 - elapsed * 4.0) * 4.5
+          }
+
+          // Click shockwaves — radial ring pulses
+          for (const w of waves) {
+            const sdx = x - w.x, sdz = z - w.z
+            const sdist = Math.sqrt(sdx * sdx + sdz * sdz)
+            const fade = Math.max(0, 1 - w.age / 2.5)
+            h += Math.sin(sdist * 0.65 - w.age * 6.5) * fade * 5.0
+              * Math.max(0, 1 - sdist / 40)
+          }
+
+          // Normalize h to [0,1] and map to bar height
+          const t = Math.max(0, Math.min(1, (h + 4.3) / 8.6))
+          const barH = Math.max(0.06, t * 5.5)
+
+          samplePalette(t)
+
+          dummy.position.set(x, 0, z)
+          dummy.scale.set(1, barH, 1)
+          dummy.updateMatrix()
+          mesh.setMatrixAt(idx, dummy.matrix)
+          mesh.setColorAt(idx, col)
+        }
+
+        mesh.instanceMatrix.needsUpdate = true
+        if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
+
         renderer.render(scene, camera)
       }
-      animate()
 
-      // Store cleanup
+      tick()
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ;(mount as any).__threeCleanup = () => {
         disposed = true
         cancelAnimationFrame(animId)
-        window.removeEventListener('mousemove', onMouseMove)
+        window.removeEventListener('mousemove', onMove)
+        mount.removeEventListener('click', onClick)
         window.removeEventListener('resize', onResize)
         geo.dispose()
         mat.dispose()
@@ -194,7 +238,7 @@ export function HeroCanvas() {
   return (
     <div
       ref={mountRef}
-      className="absolute inset-0 pointer-events-none"
+      className="absolute inset-0"
       aria-hidden="true"
     />
   )
